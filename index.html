@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Química General — Guía Primer Parcial</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0c0e14;
+    --surface: #13161f;
+    --surface2: #1a1e2a;
+    --border: #2a2f3f;
+    --accent: #e8c840;
+    --accent2: #4ecdc4;
+    --accent3: #ff6b6b;
+    --text: #e8e4d9;
+    --text-muted: #6b7280;
+    --correct: #4ade80;
+    --wrong: #f87171;
+    --t1: #e8c840; --t2: #4ecdc4; --t3: #a78bfa;
+    --t4: #fb923c; --t5: #34d399; --t6: #f472b6;
+    --t7: #60a5fa; --t8: #fbbf24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.7; min-height: 100vh; }
+
+  /* HEADER */
+  header { padding: 3rem 2rem 2rem; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #0c0e14 60%, #141826); position: relative; overflow: hidden; }
+  header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(232,200,64,0.08) 0%, transparent 70%); }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; background: var(--accent); color: var(--bg); padding: 3px 10px; border-radius: 2px; margin-bottom: 1rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1; color: var(--text); }
+  h1 span { color: var(--accent); }
+  .subtitle { margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; }
+  .countdown-bar { margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .countdown { font-family: 'IBM Plex Mono', monospace; font-size: 1.1rem; color: var(--accent3); font-weight: 600; }
+  .days-left { color: var(--text-muted); font-size: 0.85rem; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(12,14,20,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0.75rem 1rem; }
+  .nav-inner { max-width: 960px; margin: 0 auto; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  nav button { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 5px 12px; border-radius: 3px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  nav button:hover, nav button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 600; }
+
+  /* LAYOUT */
+  main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* CRONOGRAMA */
+  .cronograma { margin-bottom: 3rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-title::before { content: ''; display: block; width: 4px; height: 1.6rem; background: var(--accent); border-radius: 2px; }
+
+  .timeline { display: grid; gap: 0; }
+  .day-card { display: grid; grid-template-columns: 90px 1fr; border-bottom: 1px solid var(--border); padding: 0.9rem 0; gap: 1rem; align-items: start; }
+  .day-card:first-child { border-top: 1px solid var(--border); }
+  .day-date { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--text-muted); padding-top: 2px; }
+  .day-date strong { display: block; font-size: 0.95rem; color: var(--text); }
+  .day-content { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: flex-start; }
+  .block { font-size: 0.78rem; padding: 4px 10px; border-radius: 3px; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+  .block-study { background: rgba(232,200,64,0.12); border: 1px solid rgba(232,200,64,0.3); color: var(--accent); }
+  .block-gym { background: rgba(78,205,196,0.1); border: 1px solid rgba(78,205,196,0.25); color: var(--accent2); }
+  .block-class { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25); color: #a78bfa; }
+  .block-work { background: rgba(251,146,60,0.1); border: 1px solid rgba(251,146,60,0.25); color: #fb923c; }
+  .block-free { background: rgba(107,114,128,0.1); border: 1px solid rgba(107,114,128,0.25); color: var(--text-muted); }
+  .block-exam { background: rgba(255,107,107,0.15); border: 1px solid rgba(255,107,107,0.4); color: var(--accent3); font-weight: 600; }
+  .block-review { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.25); color: #34d399; }
+  .block-note { font-size: 0.75rem; color: var(--text-muted); width: 100%; font-family: 'IBM Plex Sans', sans-serif; font-style: italic; }
+
+  /* TEMA SECTIONS */
+  .tema-section { display: none; margin-bottom: 2rem; }
+  .tema-section.visible { display: block; }
+  .tema-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; border-radius: 6px; border-left: 4px solid var(--accent); background: var(--surface); }
+  .tema-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--text-muted); }
+  .tema-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; }
+  .tema-freq { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; background: rgba(232,200,64,0.15); color: var(--accent); }
+
+  /* THEORY */
+  .theory-box { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .theory-box h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent2); margin-bottom: 1rem; }
+  .theory-box p { font-size: 0.9rem; color: #c9c5bb; margin-bottom: 0.6rem; line-height: 1.65; }
+  .formula { font-family: 'IBM Plex Mono', monospace; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.88rem; color: var(--accent); display: block; overflow-x: auto; }
+  .key-list { list-style: none; margin: 0.5rem 0; }
+  .key-list li { font-size: 0.88rem; padding: 0.3rem 0; padding-left: 1.2rem; position: relative; color: #c9c5bb; }
+  .key-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+  .warning { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.25); border-radius: 4px; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.85rem; color: #fca5a5; }
+  .warning::before { content: '⚠ '; font-weight: 600; }
+  .tip { background: rgba(78,205,196,0.08); border: 1px solid rgba(78,205,196,0.2); border-radius: 4px; padding: 0.75rem 1rem; margin: 0.75rem 0; font-size: 0.85rem; color: #99f6e4; }
+  .tip::before { content: '💡 '; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* QUIZ */
+  .quiz-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.5rem; }
+  .quiz-header h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent3); }
+  .quiz-info { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+  .question { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .question:last-of-type { border-bottom: none; }
+  .q-text { font-size: 0.9rem; color: var(--text); margin-bottom: 0.9rem; line-height: 1.6; }
+  .q-pts { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--accent); float: right; }
+  .options { display: flex; flex-direction: column; gap: 0.5rem; }
+  .opt { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.7rem 1rem; border-radius: 4px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; font-size: 0.87rem; color: #c9c5bb; background: var(--surface2); }
+  .opt:hover { border-color: var(--accent); color: var(--text); }
+  .opt.selected { border-color: var(--accent); background: rgba(232,200,64,0.08); }
+  .opt.correct { border-color: var(--correct); background: rgba(74,222,128,0.08); color: #bbf7d0; }
+  .opt.wrong { border-color: var(--wrong); background: rgba(248,113,113,0.08); color: #fecaca; }
+  .opt-letter { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--text-muted); min-width: 20px; }
+  .answer-reveal { display: none; margin-top: 0.75rem; padding: 0.75rem 1rem; background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.2); border-radius: 4px; font-size: 0.85rem; color: #86efac; }
+  .answer-reveal.show { display: block; }
+
+  /* Short answer questions */
+  .short-answer { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .short-answer:last-of-type { border-bottom: none; }
+  .q-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--text); padding: 0.6rem 0.9rem; font-family: 'IBM Plex Sans', sans-serif; font-size: 0.87rem; resize: vertical; min-height: 60px; outline: none; transition: border-color 0.2s; }
+  .q-input:focus { border-color: var(--accent); }
+  .reveal-btn { margin-top: 0.6rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.73rem; padding: 5px 14px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: 3px; cursor: pointer; transition: all 0.2s; }
+  .reveal-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* QUIZ CONTROLS */
+  .quiz-controls { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+  .btn { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; padding: 8px 18px; border-radius: 3px; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--accent); color: var(--bg); border: none; font-weight: 600; }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+  .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+
+  .score-display { display: none; margin-top: 1rem; padding: 1rem 1.25rem; border-radius: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; text-align: center; }
+  .score-display.show { display: block; }
+  .score-pass { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: #4ade80; }
+  .score-fail { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: #f87171; }
+
+  /* ERRORES COMUNES */
+  .error-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1.25rem; }
+  .error-table th { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); text-align: left; padding: 0.5rem 0.75rem; border-bottom: 2px solid var(--border); }
+  .error-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; color: #c9c5bb; line-height: 1.5; }
+  .error-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .exceso { color: var(--accent3); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+  .defecto { color: var(--accent2); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+  .ninguno { color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; }
+
+  /* PROGRESS */
+  .progress-bar-wrap { margin-bottom: 2.5rem; }
+  .progress-label { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 0.73rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+  .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.5s ease; }
+
+  /* ALL THEMES VIEW */
+  .all-section { display: none; }
+  .all-section.visible { display: block; }
+  .tema-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .tema-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; cursor: pointer; transition: all 0.2s; }
+  .tema-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .tema-card-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-muted); }
+  .tema-card-title { font-size: 0.9rem; font-weight: 500; margin: 0.3rem 0; }
+  .tema-card-freq { font-size: 0.78rem; color: var(--text-muted); }
+  .tema-card-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 0.75rem; }
+
+  /* CRONOGRAMA view */
+  .crono-section { display: none; }
+  .crono-section.visible { display: block; }
+
+  /* QUIZ MASTER */
+  .quiz-master-section { display: none; }
+  .quiz-master-section.visible { display: block; }
+
+  /* Numeric inputs styling */
+  .num-answer { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--text); padding: 0.5rem 0.9rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.87rem; outline: none; transition: border-color 0.2s; width: 180px; }
+  .num-answer:focus { border-color: var(--accent); }
+
+  /* Tag */
+  .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; padding: 2px 8px; border-radius: 2px; margin-right: 0.4rem; margin-bottom: 0.3rem; }
+
+  footer { border-top: 1px solid var(--border); padding: 1.5rem; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">Primer Parcial · QG</div>
+    <h1>Química <span>General</span></h1>
+    <p class="subtitle">Guía de estudio completa · 8 temas · Quiz con puntaje real</p>
+    <div class="countdown-bar">
+      <span class="countdown" id="countdown">—</span>
+      <span class="days-left">días hasta el parcial · 16 de mayo 2025</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner" id="navBar">
+    <button onclick="showSection('crono')" id="btn-crono" class="active">📅 Cronograma</button>
+    <button onclick="showSection('all')" id="btn-all">🗺 Temas</button>
+    <button onclick="showSection('t1')" id="btn-t1">T1 Pvap/CC</button>
+    <button onclick="showSection('t2')" id="btn-t2">T2 Cristales</button>
+    <button onclick="showSection('t3')" id="btn-t3">T3 vdW/Z</button>
+    <button onclick="showSection('t4')" id="btn-t4">T4 Coligativas</button>
+    <button onclick="showSection('t5')" id="btn-t5">T5 CuSO₄</button>
+    <button onclick="showSection('t6')" id="btn-t6">T6 Termod.</button>
+    <button onclick="showSection('t7')" id="btn-t7">T7 Equilibrio</button>
+    <button onclick="showSection('t8')" id="btn-t8">T8 Cinética</button>
+    <button onclick="showSection('quiz-master')" id="btn-quiz-master">🎯 QUIZ PARCIAL</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- CRONOGRAMA -->
+<div class="crono-section visible" id="crono">
+  <div class="section-title">Cronograma 25 abr — 16 may</div>
+  <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;">Lunes 12:30–17 clase · Martes libre hasta 17:30 (videos AeH) · Miércoles 12:30–17 clase + trabajo 17–20 · Jueves 8:30–12:30 clase + gym 13 + trabajo 17–20 · Gym también sáb 10hs y lun 7:30</p>
+  <div class="timeline">
+
+    <div class="day-card">
+      <div class="day-date"><strong>Sáb 25/4</strong>HOY</div>
+      <div class="day-content">
+        <span class="block block-gym">10hs: Gym</span>
+        <span class="block block-study">12–14hs: T1 Pvap — fórmula del TP + conversiones</span>
+        <span class="block block-study">16–19hs: T1 Clausius-Clapeyron + tabla de errores completa</span>
+        <span class="block-note">T1 aparece en TODOS los parciales — prioridad máxima</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Dom 26/4</strong></div>
+      <div class="day-content">
+        <span class="block block-study">10–13hs: T1 quiz + T2 Sólidos cristalinos (teoría)</span>
+        <span class="block block-study">16–19hs: T2 ejercicios densidad / radio atómico / relación de radios</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Lun 27/4</strong></div>
+      <div class="day-content">
+        <span class="block block-gym">7:30hs: Gym</span>
+        <span class="block block-class">12:30–17hs: Clase QG</span>
+        <span class="block block-study">18–20hs: T3 van der Waals + factor Z (teoría)</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Mar 28/4</strong></div>
+      <div class="day-content">
+        <span class="block block-free">Mañana libre — videos AeH antes de las 17:30</span>
+        <span class="block block-free">17:30–19hs: Clase AeH</span>
+        <span class="block block-study">20–22hs: T3 quiz + T2 quiz repaso</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Mié 29/4</strong></div>
+      <div class="day-content">
+        <span class="block block-class">12:30–17hs: Clase QG</span>
+        <span class="block block-work">17–20hs: Trabajo</span>
+        <span class="block-note">Día cargado — sin estudio extra</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Jue 30/4</strong></div>
+      <div class="day-content">
+        <span class="block block-class">8:30–12:30hs: Clase QG</span>
+        <span class="block block-gym">13hs: Gym</span>
+        <span class="block block-work">17–20hs: Trabajo</span>
+        <span class="block block-study">21–22:30hs: T4 Coligativas — crioscopia + Raoult + i de van't Hoff</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Vie 1/5</strong>feriado</div>
+      <div class="day-content">
+        <span class="block block-study">10–13hs: T4 ejercicios + tabla errores crioscopía</span>
+        <span class="block block-study">15–17hs: T5 CuSO₄ rendimientos (teoría + ejercicios)</span>
+        <span class="block block-study">18–20hs: T5 quiz V/F del TP</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Sáb 2/5</strong></div>
+      <div class="day-content">
+        <span class="block block-gym">10hs: Gym</span>
+        <span class="block block-study">12–14hs: T6 Termodinámica ΔS — fórmulas y procesos</span>
+        <span class="block block-study">16–19hs: T6 ΔG, espontaneidad, criterios + quiz completo</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Dom 3/5</strong></div>
+      <div class="day-content">
+        <span class="block block-study">10–13hs: T7 Equilibrio Kc/Kp + perturbaciones (teoría)</span>
+        <span class="block block-study">15–18hs: T7 ejercicios + van't Hoff temperatura</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Lun 4/5</strong></div>
+      <div class="day-content">
+        <span class="block block-gym">7:30hs: Gym</span>
+        <span class="block block-class">12:30–17hs: Clase QG</span>
+        <span class="block block-study">18–20hs: T8 Cinética — órdenes + t½ + Ea (teoría)</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Mar 5/5</strong></div>
+      <div class="day-content">
+        <span class="block block-free">Mañana libre — videos AeH antes de las 17:30</span>
+        <span class="block block-free">17:30–19hs: Clase AeH</span>
+        <span class="block block-study">20–22hs: T8 quiz cinética + mecanismos</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Mié 6/5</strong></div>
+      <div class="day-content">
+        <span class="block block-class">12:30–17hs: Clase QG</span>
+        <span class="block block-work">17–20hs: Trabajo</span>
+        <span class="block-note">Sin estudio extra — día muy cargado</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Jue 7/5</strong></div>
+      <div class="day-content">
+        <span class="block block-class">8:30–12:30hs: Clase QG</span>
+        <span class="block block-gym">13hs: Gym</span>
+        <span class="block block-work">17–20hs: Trabajo</span>
+        <span class="block block-study">21–22:30hs: Repaso temas más débiles según quizzes</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Vie 8/5</strong></div>
+      <div class="day-content">
+        <span class="block block-study">19–22hs: 🎯 SIMULACRO completo — condiciones reales, cronometrado</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Sáb 9/5</strong></div>
+      <div class="day-content">
+        <span class="block block-gym">10hs: Gym</span>
+        <span class="block block-review">12–14hs: Corrección del simulacro — identificar errores</span>
+        <span class="block block-review">16–19hs: Refuerzo intensivo temas donde fallaste</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Dom 10/5</strong></div>
+      <div class="day-content">
+        <span class="block block-review">10–13hs: Repaso general T1–T8 con apuntes propios</span>
+        <span class="block block-free">Tarde libre — necesitás descansar</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Lun 11/5</strong></div>
+      <div class="day-content">
+        <span class="block block-gym">7:30hs: Gym</span>
+        <span class="block block-class">12:30–17hs: Clase QG</span>
+        <span class="block block-review">18–19:30hs: Fórmulas clave en papel + errores frecuentes del TP</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Mar 12/5</strong></div>
+      <div class="day-content">
+        <span class="block block-free">Mañana libre — videos AeH antes de las 17:30</span>
+        <span class="block block-free">17:30–19hs: Clase AeH</span>
+        <span class="block block-review">20–21:30hs: Repaso final T1 + T4 + T7 (los de más puntos)</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Mié 13/5</strong></div>
+      <div class="day-content">
+        <span class="block block-class">12:30–17hs: Clase QG</span>
+        <span class="block block-work">17–20hs: Trabajo</span>
+        <span class="block-note">No estudies después del trabajo — descansá</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Jue 14/5</strong></div>
+      <div class="day-content">
+        <span class="block block-class">8:30–12:30hs: Clase QG</span>
+        <span class="block block-gym">13hs: Gym</span>
+        <span class="block block-work">17–20hs: Trabajo</span>
+        <span class="block block-review">21–22hs: Solo repaso mental fórmulas — nada nuevo</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Vie 15/5</strong></div>
+      <div class="day-content">
+        <span class="block block-free">Día libre — no estudies, dormí bien</span>
+        <span class="block-note">Una mirada rápida a tus apuntes a la mañana, nada más</span>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-date"><strong>Sáb 16/5</strong></div>
+      <div class="day-content">
+        <span class="block block-exam">🎯 PARCIAL</span>
+        <span class="block-note">Desayuná bien, llegá temprano, llevá calculadora y lapicera de repuesto</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ALL THEMES -->
+<div class="all-section" id="all">
+  <div class="section-title">Mapa de temas</div>
+  <div class="tema-grid">
+    <div class="tema-card" onclick="showSection('t1')">
+      <div class="tema-card-dot" style="background:var(--t1)"></div>
+      <div class="tema-card-num">TEMA 1</div>
+      <div class="tema-card-title">Presión de vapor &amp; Clausius-Clapeyron</div>
+      <div class="tema-card-freq">⭐⭐⭐ Aparece en TODOS los parciales · 4–6 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t2')">
+      <div class="tema-card-dot" style="background:var(--t2)"></div>
+      <div class="tema-card-num">TEMA 2</div>
+      <div class="tema-card-title">Sólidos cristalinos</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en pregunta 1 · 3–6 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t3')">
+      <div class="tema-card-dot" style="background:var(--t3)"></div>
+      <div class="tema-card-num">TEMA 3</div>
+      <div class="tema-card-title">Gas real van der Waals &amp; factor Z</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en pregunta 1 · 4–6 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t4')">
+      <div class="tema-card-dot" style="background:var(--t4)"></div>
+      <div class="tema-card-num">TEMA 4</div>
+      <div class="tema-card-title">Propiedades coligativas</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en pregunta 2 · 4–8 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t5')">
+      <div class="tema-card-dot" style="background:var(--t5)"></div>
+      <div class="tema-card-num">TEMA 5</div>
+      <div class="tema-card-title">Purificación CuSO₄ (TP)</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en pregunta 2 · 3–6 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t6')">
+      <div class="tema-card-dot" style="background:var(--t6)"></div>
+      <div class="tema-card-num">TEMA 6</div>
+      <div class="tema-card-title">Termodinámica: ΔS, ΔG, espontaneidad</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en preg. 1 o 2 · 6–8 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t7')">
+      <div class="tema-card-dot" style="background:var(--t7)"></div>
+      <div class="tema-card-num">TEMA 7</div>
+      <div class="tema-card-title">Equilibrio químico</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en pregunta 3 · 5–9 pts</div>
+    </div>
+    <div class="tema-card" onclick="showSection('t8')">
+      <div class="tema-card-dot" style="background:var(--t8)"></div>
+      <div class="tema-card-num">TEMA 8</div>
+      <div class="tema-card-title">Cinética química</div>
+      <div class="tema-card-freq">⭐⭐⭐ Siempre en pregunta 3 · 3–6 pts</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= TEMA 1 ======= -->
+<div class="tema-section" id="t1">
+  <div class="tema-header" style="border-left-color:var(--t1)">
+    <div>
+      <div class="tema-num">TEMA 1</div>
+      <div class="tema-title">Presión de vapor &amp; Clausius-Clapeyron</div>
+    </div>
+    <span class="tema-freq">Aparece en TODOS los parciales</span>
+  </div>
+
+  <div class="theory-box">
+    <h3>Fórmula fundamental del TP</h3>
+    <p>La presión de vapor se calcula despejando de:</p>
+    <code class="formula">P_vapor = (P_atm − P_Hg) + P_agua</code>
+    <p>Donde <b>P_agua</b> se convierte a cmHg:</p>
+    <code class="formula">h_Hg = (h_agua × δ_agua) / δ_Hg = h_agua × (1,00 / 13,6)</code>
+    <div class="tip">El error más común: olvidar sumar P_agua. Siempre incluilo aunque sea pequeño.</div>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Clausius-Clapeyron</h3>
+      <code class="formula">ln(P₂/P₁) = (ΔH/R) × (1/T₁ − 1/T₂)</code>
+      <p>Para calcular:</p>
+      <ul class="key-list">
+        <li>ΔH de vaporización → datos P y T</li>
+        <li>T de ebullición normal → P₂=760 torr</li>
+        <li>Presión a otra temperatura</li>
+      </ul>
+    </div>
+    <div class="theory-box">
+      <h3>Conversiones frecuentes</h3>
+      <ul class="key-list">
+        <li>1 atm = 76 cmHg = 760 torr = 760 mmHg</li>
+        <li>T(K) = T(°C) + 273,15</li>
+        <li>R = 8,31 J/K·mol</li>
+        <li>T ebullición normal → P = 1 atm = 760 torr</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Tabla de errores del TP — SIEMPRE entra</h3>
+    <table class="error-table">
+      <tr><th>Situación</th><th>Error en Pvapor</th><th>Justificación</th></tr>
+      <tr><td>P_atm mayor a la real (o medida por exceso)</td><td class="exceso">EXCESO</td><td>P_vapor = P_atm − P_Hg + P_agua → P_atm↑ ⇒ P_vapor↑</td></tr>
+      <tr><td>P_atm menor a la real (medida por defecto)</td><td class="defecto">DEFECTO</td><td>P_atm↓ ⇒ P_vapor↓</td></tr>
+      <tr><td>Sustancia más volátil</td><td class="exceso">EXCESO</td><td>Mayor P_vapor real, se mide una Pvap mayor</td></tr>
+      <tr><td>Sustancia menos volátil</td><td class="defecto">DEFECTO</td><td>Menor P_vapor real</td></tr>
+      <tr><td>Impurezas no volátiles en la sustancia</td><td class="defecto">DEFECTO</td><td>Propiedad coligativa: ↓ P_vapor</td></tr>
+      <tr><td>T real más alta que la medida</td><td class="exceso">EXCESO</td><td>P_vapor ↑ con T, si T real > T medida → Pvap real > calculada</td></tr>
+      <tr><td>No se restó la columna externa de Hg</td><td class="defecto">DEFECTO</td><td>P_Hg computada > real ⇒ P_vapor calculada < real</td></tr>
+      <tr><td>Se aumenta la altura de agua sobre la ampolla</td><td class="ninguno">NINGUNO</td><td>Si se mide correctamente la nueva altura, no hay error</td></tr>
+      <tr><td>No se consideró P_vapor del agua en cálculo</td><td class="ninguno">NINGUNO</td><td>El agua aporta una presión pequeña pero si ya está en la fórmula...</td></tr>
+    </table>
+    <div class="warning">En el parcial siempre piden 4–5 errores. El razonamiento parte siempre de P_vapor = (P_atm − P_Hg) + P_agua y se analiza qué cambia.</div>
+  </div>
+
+  <!-- QUIZ T1 -->
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 1</h3>
+      <span class="quiz-info">6 preguntas · máx 16 pts · aprueba con 9,6 pts</span>
+    </div>
+
+    <div class="question" id="q1_1">
+      <div class="q-text"><span class="q-pts">4 pts</span>En la determinación de Pvap de CHCl₃ a 50°C: P_atm = 766,4 torr, h_Hg = 18,5 cm, h_agua sobre ampolla = 12,0 cm. δ(Hg) = 13,6 g/cm³. ¿Cuál es la presión de vapor?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q1_1','a')"><span class="opt-letter">a)</span>590 torr</div>
+        <div class="opt" onclick="selectOpt(this,'q1_1','b')"><span class="opt-letter">b)</span>59,0 cmHg</div>
+        <div class="opt" onclick="selectOpt(this,'q1_1','c')"><span class="opt-letter">c)</span>45,8 cmHg</div>
+        <div class="opt" onclick="selectOpt(this,'q1_1','d')"><span class="opt-letter">d)</span>59,9 cmHg</div>
+      </div>
+      <div class="answer-reveal" id="ans_q1_1">
+        ✓ <b>b) 59,0 cmHg</b><br>
+        h_Hg de agua = 12,0 × (1/13,6) = 0,882 cmHg<br>
+        P_vapor = (76,64 − 18,5) + 0,882 = 59,02 cmHg ≈ 590 torr
+      </div>
+    </div>
+
+    <div class="question" id="q1_2">
+      <div class="q-text"><span class="q-pts">4 pts</span>Con los datos anteriores (P₁=590 torr, T₁=50°C) y sabiendo que P₂=160 torr a 20°C, calculá el punto de ebullición normal del CHCl₃. R=8,31 J/K·mol</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q1_2','a')"><span class="opt-letter">a)</span>329,5 K (56,5°C)</div>
+        <div class="opt" onclick="selectOpt(this,'q1_2','b')"><span class="opt-letter">b)</span>345 K (72°C)</div>
+        <div class="opt" onclick="selectOpt(this,'q1_2','c')"><span class="opt-letter">c)</span>313 K (40°C)</div>
+        <div class="opt" onclick="selectOpt(this,'q1_2','d')"><span class="opt-letter">d)</span>361 K (88°C)</div>
+      </div>
+      <div class="answer-reveal" id="ans_q1_2">
+        ✓ <b>a) 329,5 K (≈ 56,5°C)</b><br>
+        Primero calcular ΔH con T₁=293K, P₁=160 torr, T₂=323K, P₂=590 torr → ΔH≈34207 J/mol<br>
+        Luego usar ΔH para encontrar T donde P=760 torr → T≈329,5 K
+      </div>
+    </div>
+
+    <div class="question" id="q1_3">
+      <div class="q-text"><span class="q-pts">2 pts</span>Si durante el TP de presión de vapor se aumenta la temperatura del baño, la burbuja de vapor en el extremo del capilar:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q1_3','a')"><span class="opt-letter">a)</span>Condensa y desaparece</div>
+        <div class="opt" onclick="selectOpt(this,'q1_3','b')"><span class="opt-letter">b)</span>Sale (crece, emerge)</div>
+        <div class="opt" onclick="selectOpt(this,'q1_3','c')"><span class="opt-letter">c)</span>Permanece igual</div>
+        <div class="opt" onclick="selectOpt(this,'q1_3','d')"><span class="opt-letter">d)</span>No se puede saber</div>
+      </div>
+      <div class="answer-reveal" id="ans_q1_3">
+        ✓ <b>b) Sale</b><br>
+        Al aumentar T, la P_vapor aumenta. Como P_vapor > P_sistema, la burbuja crece y sale.
+      </div>
+    </div>
+
+    <div class="question" id="q1_4">
+      <div class="q-text"><span class="q-pts">2 pts</span>Si inadvertidamente la presión atmosférica medida fue MAYOR que la real, el error en la Pvapor determinada es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q1_4','a')"><span class="opt-letter">a)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'q1_4','b')"><span class="opt-letter">b)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'q1_4','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_q1_4">
+        ✓ <b>b) Por defecto</b><br>
+        Si P_atm medida > real → P_Hg calculada también es mayor → P_vapor = (P_atm − P_Hg) + P_agua: aunque P_atm↑, P_Hg también↑ en la misma medida... sin embargo el efecto neto depende de cuál domina. La respuesta correcta según el parcial de 2do semestre 2024 es DEFECTO: P_vapor ↓.
+      </div>
+    </div>
+
+    <div class="question" id="q1_5">
+      <div class="q-text"><span class="q-pts">2 pts</span>Si la sustancia en la ampolla tenía impurezas no volátiles disueltas, la Pvap determinada tiene error:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q1_5','a')"><span class="opt-letter">a)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'q1_5','b')"><span class="opt-letter">b)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'q1_5','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_q1_5">
+        ✓ <b>b) Por defecto</b><br>
+        Las impurezas no volátiles disminuyen la Pvap del solvente (propiedad coligativa). La Pvap real es menor que la del líquido puro.
+      </div>
+    </div>
+
+    <div class="question" id="q1_6">
+      <div class="q-text"><span class="q-pts">2 pts</span>La ecuación de Clausius-Clapeyron es válida para los equilibrios:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q1_6','a')"><span class="opt-letter">a)</span>Solo líquido-vapor</div>
+        <div class="opt" onclick="selectOpt(this,'q1_6','b')"><span class="opt-letter">b)</span>Líquido-vapor y sólido-vapor (sublimación)</div>
+        <div class="opt" onclick="selectOpt(this,'q1_6','c')"><span class="opt-letter">c)</span>Todos los equilibrios de fases sin excepción</div>
+        <div class="opt" onclick="selectOpt(this,'q1_6','d')"><span class="opt-letter">d)</span>Solo sólido-vapor</div>
+      </div>
+      <div class="answer-reveal" id="ans_q1_6">
+        ✓ <b>b) Líquido-vapor y sólido-vapor</b><br>
+        La deducción requiere una fase gaseosa (para usar PV=nRT). Es válida para vaporización y sublimación.
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t1')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t1',16)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t1"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 2 ======= -->
+<div class="tema-section" id="t2">
+  <div class="tema-header" style="border-left-color:var(--t2)">
+    <div>
+      <div class="tema-num">TEMA 2</div>
+      <div class="tema-title">Sólidos cristalinos</div>
+    </div>
+    <span class="tema-freq">Siempre en pregunta 1 · 3–6 pts</span>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Tipos de celda cúbica</h3>
+      <ul class="key-list">
+        <li><b>Cúbica simple (CS):</b> 1 átomo/celda · Z=1</li>
+        <li><b>Cúbica centrada en el cuerpo (BCC):</b> 2 átomos/celda · relación a=4r/√3</li>
+        <li><b>Cúbica centrada en las caras (FCC/CCP):</b> 4 átomos/celda · relación a=4r/√2 = 2√2·r</li>
+        <li><b>Hexagonal compacta (HCP):</b> 2 átomos/celda</li>
+      </ul>
+    </div>
+    <div class="theory-box">
+      <h3>Fórmulas de densidad</h3>
+      <code class="formula">d = masa / V = (Z × PAR/Nₐ) / a³</code>
+      <p>O al revés: de la densidad se obtiene Z para saber qué tipo de red.</p>
+      <ul class="key-list">
+        <li>Z=1 → CS</li>
+        <li>Z=2 → BCC</li>
+        <li>Z=4 → FCC</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Relación de radios iónicas — aparece siempre</h3>
+    <table class="error-table">
+      <tr><th>r_catión / r_anión</th><th>Tipo de red</th><th>N° coord. catión</th></tr>
+      <tr><td>0,225 – 0,414</td><td>ZnS (blenda)</td><td>4 (huecos tetraédricos)</td></tr>
+      <tr><td>0,414 – 0,732</td><td><b>NaCl</b></td><td>6 (huecos octaédricos)</td></tr>
+      <tr><td>0,732 – 1,000</td><td>CsCl</td><td>8</td></tr>
+      <tr><td>0,732 – 1,000 (1:2)</td><td>CaF₂ (fluorita)</td><td>8</td></tr>
+    </table>
+    <div class="warning">La blenda (ZnS) tiene el anión en red FCC y el catión ocupa la MITAD de los huecos tetraédricos → 4 de cada tipo por celda.</div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Tipos de huecos en empaquetamientos compactos</h3>
+    <ul class="key-list">
+      <li><b>FCC/CCP (ABCA):</b> 8 huecos tetraédricos, 4 octaédricos por celda</li>
+      <li><b>HCP (ABAB):</b> 2 huecos tetraédricos, 1 octaédrico por átomo</li>
+      <li>Número de coordinación en ambos = 12</li>
+    </ul>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 2</h3>
+      <span class="quiz-info">5 preguntas · máx 14 pts</span>
+    </div>
+
+    <div class="question" id="q2_1">
+      <div class="q-text"><span class="q-pts">4 pts</span>El Cr metálico tiene arista a=288 pm y densidad 7,22 g/cm³. PAR(Cr)=52. ¿Qué tipo de celda cúbica tiene?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q2_1','a')"><span class="opt-letter">a)</span>Cúbica simple (Z=1)</div>
+        <div class="opt" onclick="selectOpt(this,'q2_1','b')"><span class="opt-letter">b)</span>BCC - centrada en el cuerpo (Z=2)</div>
+        <div class="opt" onclick="selectOpt(this,'q2_1','c')"><span class="opt-letter">c)</span>FCC - centrada en las caras (Z=4)</div>
+        <div class="opt" onclick="selectOpt(this,'q2_1','d')"><span class="opt-letter">d)</span>No se puede determinar</div>
+      </div>
+      <div class="answer-reveal" id="ans_q2_1">
+        ✓ <b>b) BCC (Z=2)</b><br>
+        masa = d×V = 7,22 × (288×10⁻¹⁰)³ = 1,725×10⁻²² g<br>
+        Átomos = masa × Nₐ / PAR = 1,725×10⁻²² × 6,022×10²³ / 52 ≈ 2 → BCC
+      </div>
+    </div>
+
+    <div class="question" id="q2_2">
+      <div class="q-text"><span class="q-pts">2 pts</span>En la celda BCC, la relación entre la arista a y el radio r es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q2_2','a')"><span class="opt-letter">a)</span>a = 4r/√2</div>
+        <div class="opt" onclick="selectOpt(this,'q2_2','b')"><span class="opt-letter">b)</span>a = 4r/√3</div>
+        <div class="opt" onclick="selectOpt(this,'q2_2','c')"><span class="opt-letter">c)</span>a = 2r</div>
+        <div class="opt" onclick="selectOpt(this,'q2_2','d')"><span class="opt-letter">d)</span>a = r√2</div>
+      </div>
+      <div class="answer-reveal" id="ans_q2_2">
+        ✓ <b>b) a = 4r/√3</b><br>
+        En BCC los átomos se tocan a lo largo de la diagonal del cubo = 4r = a√3 → a = 4r/√3
+      </div>
+    </div>
+
+    <div class="question" id="q2_3">
+      <div class="q-text"><span class="q-pts">3 pts</span>El titanato de bario (BaTiO₃) tiene Ba²⁺ en vértices, Ti⁴⁺ en el centro, O²⁻ en centros de caras. ¿Cuántos átomos de cada elemento tiene la celda unitaria?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q2_3','a')"><span class="opt-letter">a)</span>1 Ba, 1 Ti, 3 O</div>
+        <div class="opt" onclick="selectOpt(this,'q2_3','b')"><span class="opt-letter">b)</span>8 Ba, 1 Ti, 6 O</div>
+        <div class="opt" onclick="selectOpt(this,'q2_3','c')"><span class="opt-letter">c)</span>1 Ba, 1 Ti, 6 O</div>
+        <div class="opt" onclick="selectOpt(this,'q2_3','d')"><span class="opt-letter">d)</span>2 Ba, 1 Ti, 3 O</div>
+      </div>
+      <div class="answer-reveal" id="ans_q2_3">
+        ✓ <b>a) 1 Ba, 1 Ti, 3 O</b><br>
+        Ba: 8 vértices × 1/8 = 1 | Ti: 1 centro × 1 = 1 | O: 6 caras × 1/2 = 3 → fórmula BaTiO₃
+      </div>
+    </div>
+
+    <div class="question" id="q2_4">
+      <div class="q-text"><span class="q-pts">3 pts</span>Los radios iónicos de Mg²⁺ y O²⁻ son 86 pm y 126 pm. ¿Qué estructura cristaliza el MgO?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q2_4','a')"><span class="opt-letter">a)</span>Blenda (ZnS)</div>
+        <div class="opt" onclick="selectOpt(this,'q2_4','b')"><span class="opt-letter">b)</span>NaCl</div>
+        <div class="opt" onclick="selectOpt(this,'q2_4','c')"><span class="opt-letter">c)</span>CsCl</div>
+        <div class="opt" onclick="selectOpt(this,'q2_4','d')"><span class="opt-letter">d)</span>Fluorita (CaF₂)</div>
+      </div>
+      <div class="answer-reveal" id="ans_q2_4">
+        ✓ <b>b) NaCl</b><br>
+        r₊/r₋ = 86/126 = 0,68 → rango 0,414–0,732 → estructura NaCl, NC=6
+      </div>
+    </div>
+
+    <div class="question" id="q2_5">
+      <div class="q-text"><span class="q-pts">2 pts</span>En la estructura de la blenda (ZnS), los átomos de S forman una red FCC. El Zn se ubica en:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q2_5','a')"><span class="opt-letter">a)</span>Todos los huecos octaédricos</div>
+        <div class="opt" onclick="selectOpt(this,'q2_5','b')"><span class="opt-letter">b)</span>La mitad de los huecos tetraédricos</div>
+        <div class="opt" onclick="selectOpt(this,'q2_5','c')"><span class="opt-letter">c)</span>Todos los huecos tetraédricos</div>
+        <div class="opt" onclick="selectOpt(this,'q2_5','d')"><span class="opt-letter">d)</span>El centro del cubo</div>
+      </div>
+      <div class="answer-reveal" id="ans_q2_5">
+        ✓ <b>b) La mitad de los huecos tetraédricos</b><br>
+        Hay 8 huecos tetraédricos en la FCC; el Zn ocupa 4 → 4 Zn + 4 S por celda
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t2')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t2',14)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t2"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 3 ======= -->
+<div class="tema-section" id="t3">
+  <div class="tema-header" style="border-left-color:var(--t3)">
+    <div>
+      <div class="tema-num">TEMA 3</div>
+      <div class="tema-title">Gas real: van der Waals y factor de compresibilidad Z</div>
+    </div>
+    <span class="tema-freq">Siempre en pregunta 1 · 4–6 pts</span>
+  </div>
+
+  <div class="theory-box">
+    <h3>Ecuación de van der Waals</h3>
+    <code class="formula">[P + n²a/V²] × [V − nb] = nRT</code>
+    <p><b>a</b>: corrección por fuerzas intermoleculares (disminuye P) · <b>b</b>: covolumen (volumen propio de las moléculas)</p>
+    <code class="formula">P = nRT/(V−nb) − n²a/V²</code>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Factor Z — 3 regímenes</h3>
+      <p><b>① Presiones moderadas:</b></p>
+      <code class="formula">Z ≈ 1 − a/(Vm·RT)</code>
+      <p>Z &lt; 1, domina atracción</p>
+      <p><b>② Presiones muy altas:</b></p>
+      <code class="formula">Z ≈ 1 + bP/(RT)</code>
+      <p>Z &gt; 1, domina repulsión/volumen</p>
+      <p><b>③ P → 0:</b> Z = 1 (gas ideal)</p>
+    </div>
+    <div class="theory-box">
+      <h3>Temperatura crítica</h3>
+      <ul class="key-list">
+        <li>Máxima T a la que puede licuarse un gas</li>
+        <li>Por encima: fluido supercrítico</li>
+        <li>Tc ↑ con fuerzas intermoleculares más fuertes</li>
+        <li>H₂ &lt; N₂ &lt; O₂ &lt; NO &lt; NH₃ &lt; HF &lt; H₂O</li>
+      </ul>
+      <div class="tip">Mayor polaridad/puentes H = mayor Tc</div>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Fuerzas intermoleculares — frecuentemente pedidas</h3>
+    <table class="error-table">
+      <tr><th>Molécula</th><th>Fuerzas presentes</th></tr>
+      <tr><td>H₂, N₂, O₂</td><td>Solo dispersión (London)</td></tr>
+      <tr><td>NO, NO₂, CO</td><td>Dispersión + dipolo-dipolo</td></tr>
+      <tr><td>NH₃</td><td>Dispersión + dipolo-dipolo + puentes H (N–H···N)</td></tr>
+      <tr><td>HF</td><td>Dispersión + dipolo-dipolo + puentes H (F–H···F, más intensos que NH₃)</td></tr>
+      <tr><td>H₂O</td><td>Dispersión + dipolo-dipolo + puentes H (los más fuertes)</td></tr>
+    </table>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 3</h3>
+      <span class="quiz-info">5 preguntas · máx 14 pts</span>
+    </div>
+
+    <div class="question" id="q3_1">
+      <div class="q-text"><span class="q-pts">4 pts</span>Un recipiente de 500 mL a 200°C contiene 1,20 mol de NO. a(NO)=5,35 L²atm/mol², b(NO)=0,0442 L/mol. ¿Cuál es la presión según vdW?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q3_1','a')"><span class="opt-letter">a)</span>93,09 atm</div>
+        <div class="opt" onclick="selectOpt(this,'q3_1','b')"><span class="opt-letter">b)</span>73,32 atm</div>
+        <div class="opt" onclick="selectOpt(this,'q3_1','c')"><span class="opt-letter">c)</span>85,5 atm</div>
+        <div class="opt" onclick="selectOpt(this,'q3_1','d')"><span class="opt-letter">d)</span>65,2 atm</div>
+      </div>
+      <div class="answer-reveal" id="ans_q3_1">
+        ✓ <b>b) 73,32 atm</b><br>
+        P = nRT/(V−nb) − n²a/V² = 1,20×0,082×473/(0,5−1,20×0,0442) − 1,44×5,35/0,25<br>
+        = 46,54/0,4470 − 30,82 = 104,12 − 30,82 = 73,30 atm
+      </div>
+    </div>
+
+    <div class="question" id="q3_2">
+      <div class="q-text"><span class="q-pts">2 pts</span>¿Por qué el gas real ejerce MENOS presión que el ideal en condiciones moderadas?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q3_2','a')"><span class="opt-letter">a)</span>Porque las moléculas tienen volumen propio</div>
+        <div class="opt" onclick="selectOpt(this,'q3_2','b')"><span class="opt-letter">b)</span>Porque las fuerzas atractivas disminuyen la frecuencia de choques contra las paredes</div>
+        <div class="opt" onclick="selectOpt(this,'q3_2','c')"><span class="opt-letter">c)</span>Porque la temperatura es mayor en el gas real</div>
+        <div class="opt" onclick="selectOpt(this,'q3_2','d')"><span class="opt-letter">d)</span>Porque Z es siempre mayor a 1</div>
+      </div>
+      <div class="answer-reveal" id="ans_q3_2">
+        ✓ <b>b)</b> Las fuerzas de atracción intermolecular hacen que las moléculas se "jalonen" entre sí antes de chocar la pared → P real &lt; P ideal → Z &lt; 1
+      </div>
+    </div>
+
+    <div class="question" id="q3_3">
+      <div class="q-text"><span class="q-pts">2 pts</span>A presiones muy altas, Z &gt; 1 porque:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q3_3','a')"><span class="opt-letter">a)</span>Las fuerzas atractivas dominan totalmente</div>
+        <div class="opt" onclick="selectOpt(this,'q3_3','b')"><span class="opt-letter">b)</span>El volumen propio de las moléculas se hace significativo</div>
+        <div class="opt" onclick="selectOpt(this,'q3_3','c')"><span class="opt-letter">c)</span>La temperatura aumenta</div>
+        <div class="opt" onclick="selectOpt(this,'q3_3','d')"><span class="opt-letter">d)</span>Ninguna de las anteriores</div>
+      </div>
+      <div class="answer-reveal" id="ans_q3_3">
+        ✓ <b>b)</b> A altas P, el volumen libre se reduce mucho. El término nb en (V−nb) es importante → volumen molar real &gt; ideal → Z &gt; 1
+      </div>
+    </div>
+
+    <div class="question" id="q3_4">
+      <div class="q-text"><span class="q-pts">2 pts</span>Ordenar en forma creciente de temperatura crítica: H₂, N₂, NH₃, NO₂, HF</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q3_4','a')"><span class="opt-letter">a)</span>HF &lt; NH₃ &lt; NO₂ &lt; N₂ &lt; H₂</div>
+        <div class="opt" onclick="selectOpt(this,'q3_4','b')"><span class="opt-letter">b)</span>H₂ &lt; N₂ &lt; NO₂ &lt; NH₃ &lt; HF</div>
+        <div class="opt" onclick="selectOpt(this,'q3_4','c')"><span class="opt-letter">c)</span>H₂ &lt; N₂ &lt; NH₃ &lt; NO₂ &lt; HF</div>
+        <div class="opt" onclick="selectOpt(this,'q3_4','d')"><span class="opt-letter">d)</span>N₂ &lt; H₂ &lt; NO₂ &lt; HF &lt; NH₃</div>
+      </div>
+      <div class="answer-reveal" id="ans_q3_4">
+        ✓ <b>b) H₂ &lt; N₂ &lt; NO₂ &lt; NH₃ &lt; HF</b><br>
+        H₂ y N₂ solo dispersión, muy baja Tc. NO₂ dipolo-dipolo. NH₃ y HF tienen puentes H, pero F es más electronegativo → el puente H–F es más fuerte que H–N.
+      </div>
+    </div>
+
+    <div class="question" id="q3_5">
+      <div class="q-text"><span class="q-pts">4 pts</span>¿Cómo varía el factor Z con el aumento de temperatura para un gas real fijo a P moderada?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q3_5','a')"><span class="opt-letter">a)</span>Z disminuye, alejándose del comportamiento ideal</div>
+        <div class="opt" onclick="selectOpt(this,'q3_5','b')"><span class="opt-letter">b)</span>Z aumenta, acercándose a 1 (comportamiento ideal)</div>
+        <div class="opt" onclick="selectOpt(this,'q3_5','c')"><span class="opt-letter">c)</span>Z no varía con la temperatura</div>
+        <div class="opt" onclick="selectOpt(this,'q3_5','d')"><span class="opt-letter">d)</span>Z aumenta solo a presiones muy altas</div>
+      </div>
+      <div class="answer-reveal" id="ans_q3_5">
+        ✓ <b>b)</b> A mayor T, el término a/VmRT disminuye → Z = 1 − a/VmRT se acerca a 1. Igualmente, el término bP/RT disminuye con T → Z también se acerca a 1 a altas P.
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t3')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t3',14)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t3"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 4 ======= -->
+<div class="tema-section" id="t4">
+  <div class="tema-header" style="border-left-color:var(--t4)">
+    <div>
+      <div class="tema-num">TEMA 4</div>
+      <div class="tema-title">Propiedades coligativas</div>
+    </div>
+    <span class="tema-freq">Siempre en pregunta 2 · 4–8 pts</span>
+  </div>
+
+  <div class="theory-box">
+    <h3>Las 4 propiedades coligativas</h3>
+    <table class="error-table">
+      <tr><th>Propiedad</th><th>Fórmula</th><th>Efecto</th></tr>
+      <tr><td>Descenso presión de vapor</td><td>ΔP/P° = i·x_soluto (Raoult: P = x_solvente·P°)</td><td>↓ P_vapor solvente</td></tr>
+      <tr><td>Descenso crioscópico</td><td>ΔTc = i·Kc·m</td><td>↓ punto de fusión</td></tr>
+      <tr><td>Ascenso ebulloscópico</td><td>ΔTe = i·Ke·m</td><td>↑ punto de ebullición</td></tr>
+      <tr><td>Presión osmótica</td><td>π = i·C·R·T</td><td>Osmosis</td></tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Factor i de van't Hoff</h3>
+      <ul class="key-list">
+        <li>No electrolito: i = 1</li>
+        <li>Electrolito fuerte MX: i = 2 (diluido)</li>
+        <li>Electrolito débil: i = 1 + α(ν−1)</li>
+      </ul>
+      <code class="formula">i = 1 + α(ν − 1)</code>
+      <p>α = grado disociación; ν = N° iones</p>
+    </div>
+    <div class="theory-box">
+      <h3>Unidades y conversiones</h3>
+      <ul class="key-list">
+        <li><b>Molalidad:</b> mol soluto / kg solvente</li>
+        <li><b>%p/p:</b> g soluto / 100 g solución</li>
+        <li>Kc(H₂O) = 1,86 °C/m</li>
+        <li>Ke(H₂O) = 0,52 °C/m</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Errores del TP de crioscopia — siempre entra</h3>
+    <table class="error-table">
+      <tr><th>Situación</th><th>Error en PM</th><th>Razonamiento</th></tr>
+      <tr><td>Solvente con impurezas (To menor a 0°C)</td><td class="exceso">EXCESO</td><td>ΔTc calculado &lt; real → m↓ → PM↑</td></tr>
+      <tr><td>Sal caída en la solución</td><td class="defecto">DEFECTO</td><td>ΔTc calculado &gt; real → m↑ → PM↓</td></tr>
+      <tr><td>Soluto se disocia (electrolito)</td><td class="defecto">DEFECTO</td><td>i &gt; 1, más partículas → ΔTc mayor → m aparente mayor → PM↓</td></tr>
+      <tr><td>Sobreenfriamiento excesivo</td><td class="defecto">DEFECTO</td><td>T detectada &lt; real → ΔTc aparente &gt; real → m↑ → PM↓</td></tr>
+      <tr><td>Mayor volumen de solución en tubo</td><td class="ninguno">NINGUNO</td><td>No afecta la concentración</td></tr>
+      <tr><td>Camisa con KCl en vez de NaCl</td><td class="ninguno">NINGUNO</td><td>Solo cambia el refrigerante, no la medición</td></tr>
+    </table>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 4</h3>
+      <span class="quiz-info">6 preguntas · máx 18 pts</span>
+    </div>
+
+    <div class="question" id="q4_1">
+      <div class="q-text"><span class="q-pts">4 pts</span>Una solución 5,00% p/p de un soluto AB en agua congela a −1,23°C. El soluto se disocia en 18,5%. Kc=1,86°C/m. ¿Cuál es la masa molar de AB?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q4_1','a')"><span class="opt-letter">a)</span>94,3 g/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q4_1','b')"><span class="opt-letter">b)</span>112,5 g/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q4_1','c')"><span class="opt-letter">c)</span>80,0 g/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q4_1','d')"><span class="opt-letter">d)</span>78,4 g/mol</div>
+      </div>
+      <div class="answer-reveal" id="ans_q4_1">
+        ✓ <b>a) 94,3 g/mol</b><br>
+        i = 1 + 0,185×(2−1) = 1,185<br>
+        ΔTc = i·Kc·m → 1,23 = 1,185×1,86×m → m = 0,558 molal<br>
+        5g AB / 95g H₂O × (1000/1) = 52,63 g/kg solv<br>
+        PM = 52,63 / 0,558 = 94,3 g/mol
+      </div>
+    </div>
+
+    <div class="question" id="q4_2">
+      <div class="q-text"><span class="q-pts">4 pts</span>Una solución 12% p/p de soluto no volátil/no electrolito en benceno (PM benceno=78) tiene Tf=2,50°C. Kc(benceno)=5,07°C/m, Tf°=5,50°C. ¿Cuál es la presión de vapor a 25°C si P°(benceno)=95,1 torr?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q4_2','a')"><span class="opt-letter">a)</span>91,5 torr</div>
+        <div class="opt" onclick="selectOpt(this,'q4_2','b')"><span class="opt-letter">b)</span>90,9 torr</div>
+        <div class="opt" onclick="selectOpt(this,'q4_2','c')"><span class="opt-letter">c)</span>88,3 torr</div>
+        <div class="opt" onclick="selectOpt(this,'q4_2','d')"><span class="opt-letter">d)</span>93,2 torr</div>
+      </div>
+      <div class="answer-reveal" id="ans_q4_2">
+        ✓ <b>b) 90,9 torr</b><br>
+        ΔTc=3,0°C → m=3/5,07=0,5917m → PM soluto=230,5 g/mol<br>
+        x_benceno = (12/78)/(12/78+88/230,5) ... En 100g soluc: 12g soluto, 88g benceno<br>
+        x_benceno = (88/78) / (88/78 + 12/230,5) = 1,128/(1,128+0,052) = 0,956<br>
+        P = 0,956 × 95,1 = 90,9 torr
+      </div>
+    </div>
+
+    <div class="question" id="q4_3">
+      <div class="q-text"><span class="q-pts">2 pts</span>Al usar agua con sal para determinar la Tc del solvente en el TP de crioscopia, el error en PM determinado es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q4_3','a')"><span class="opt-letter">a)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'q4_3','b')"><span class="opt-letter">b)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'q4_3','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_q4_3">
+        ✓ <b>b) Por exceso</b><br>
+        To medida &lt; 0°C (por ej. -0,3°C). ΔTc = To − Tsolución = −0,3 − (−T) &lt; 0 − (−T) → ΔTc aparente &lt; real → molalidad↓ → PM↑
+      </div>
+    </div>
+
+    <div class="question" id="q4_4">
+      <div class="q-text"><span class="q-pts">2 pts</span>Para un electrolito débil AB con grado de disociación α=0,20, el factor i de van't Hoff es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q4_4','a')"><span class="opt-letter">a)</span>i = 1,0</div>
+        <div class="opt" onclick="selectOpt(this,'q4_4','b')"><span class="opt-letter">b)</span>i = 1,2</div>
+        <div class="opt" onclick="selectOpt(this,'q4_4','c')"><span class="opt-letter">c)</span>i = 2,0</div>
+        <div class="opt" onclick="selectOpt(this,'q4_4','d')"><span class="opt-letter">d)</span>i = 0,8</div>
+      </div>
+      <div class="answer-reveal" id="ans_q4_4">
+        ✓ <b>b) i = 1,2</b><br>
+        i = 1 + α(ν−1) = 1 + 0,20×(2−1) = 1,20
+      </div>
+    </div>
+
+    <div class="question" id="q4_5">
+      <div class="q-text"><span class="q-pts">4 pts</span>Ordenar de menor a mayor temperatura de ebullición: urea 0,1m, NaCl 0,1m, KNO₃ 0,1m, urea 0,2m. Justificá.</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q4_5','a')"><span class="opt-letter">a)</span>urea 0,1m &lt; urea 0,2m &lt; KNO₃ 0,1m &lt; NaCl 0,1m</div>
+        <div class="opt" onclick="selectOpt(this,'q4_5','b')"><span class="opt-letter">b)</span>urea 0,1m &lt; KNO₃ 0,1m &lt; urea 0,2m = NaCl 0,1m</div>
+        <div class="opt" onclick="selectOpt(this,'q4_5','c')"><span class="opt-letter">c)</span>urea 0,2m &lt; NaCl 0,1m &lt; KNO₃ 0,1m &lt; urea 0,1m</div>
+        <div class="opt" onclick="selectOpt(this,'q4_5','d')"><span class="opt-letter">d)</span>urea 0,1m &lt; NaCl 0,1m &lt; KNO₃ 0,1m &lt; urea 0,2m</div>
+      </div>
+      <div class="answer-reveal" id="ans_q4_5">
+        ✓ <b>b)</b><br>
+        ΔTe = i·Ke·m → urea 0,1m: Ke×0,1 | KNO₃ 0,1m: 2×Ke×0,1=Ke×0,2 | urea 0,2m: Ke×0,2 | NaCl 0,1m: 2×Ke×0,1=Ke×0,2<br>
+        urea 0,1m &lt; urea 0,2m ≈ KNO₃ 0,1m ≈ NaCl 0,1m
+      </div>
+    </div>
+
+    <div class="question" id="q4_6">
+      <div class="q-text"><span class="q-pts">2 pts</span>Si en el TP el soluto se disoció parcialmente, el PM determinado tendrá error:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q4_6','a')"><span class="opt-letter">a)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'q4_6','b')"><span class="opt-letter">b)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'q4_6','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_q4_6">
+        ✓ <b>b) Por defecto</b><br>
+        Disociación → más partículas → ΔTc mayor al esperado → molalidad aparente mayor → PM calculado menor que el verdadero
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t4')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t4',18)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t4"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 5 ======= -->
+<div class="tema-section" id="t5">
+  <div class="tema-header" style="border-left-color:var(--t5)">
+    <div>
+      <div class="tema-num">TEMA 5</div>
+      <div class="tema-title">Purificación de CuSO₄ (TP)</div>
+    </div>
+    <span class="tema-freq">Siempre en pregunta 2 · 3–8 pts</span>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Rendimientos — fórmulas clave</h3>
+      <code class="formula">η_cristalización = m_microcristales / m_inicial × 100</code>
+      <code class="formula">η_operativo = (m_cristales + m_soluto_aguas_madres) / m_inicial × 100</code>
+      <p>MM CuSO₄ = 159,5 g/mol · MM CuSO₄·5H₂O = 249,5 g/mol</p>
+    </div>
+    <div class="theory-box">
+      <h3>Procedimiento del TP</h3>
+      <ul class="key-list">
+        <li>Disolver CuSO₄ comercial (con FeSO₄) a ~95°C</li>
+        <li>Agregar agua de bromo → Fe²⁺ → Fe³⁺</li>
+        <li>Agregar NH₃ → precipitar Fe(OH)₃, Cu queda como [Cu(NH₃)₄]²⁺</li>
+        <li>Filtrar → acidificar → cristalizar enfriando</li>
+        <li>Filtrar, secar con papel, pesar</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>V/F que aparecen en los parciales</h3>
+    <table class="error-table">
+      <tr><th>Afirmación</th><th>V/F</th><th>Justificación</th></tr>
+      <tr><td>NH₃ puede sustituirse por NaOH en el ensayo previo</td><td style="color:var(--wrong)">FALSO</td><td>NaOH precipita Cu(OH)₂ y Fe(OH)₃ juntos, no puede separarse. NH₃ forma [Cu(NH₃)₄]²⁺ soluble y precipita solo Fe(OH)₃</td></tr>
+      <tr><td>Agua de bromo para eliminar isomorfismo CuSO₄-FeSO₄</td><td style="color:var(--wrong)">FALSO</td><td>El agua de bromo oxidar Fe²⁺ a Fe³⁺ para poder precipitarlo. No "elimina el isomorfismo" directamente.</td></tr>
+      <tr><td>Lavado excesivo de cristales disminuye rendimiento</td><td style="color:var(--correct)">VERDADERO</td><td>Cristales se disuelven parcialmente</td></tr>
+      <tr><td>Impurezas de hierro están como Fe³⁺ en aguas madres</td><td style="color:var(--correct)">VERDADERO</td><td>Se oxidó a Fe³⁺ y se precipitó como Fe(OH)₃, pero algo puede quedar en solución</td></tr>
+      <tr><td>Enfriar más → mayor rendimiento de cristalización</td><td style="color:var(--correct)">VERDADERO</td><td>Menor T → menor solubilidad → más cristales precipitan</td></tr>
+    </table>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 5</h3>
+      <span class="quiz-info">4 preguntas · máx 12 pts</span>
+    </div>
+
+    <div class="question" id="q5_1">
+      <div class="q-text"><span class="q-pts">4 pts</span>En una purificación de CuSO₄, η_cristalización=55% y η_operativo=89%, masa inicial=120g, aguas madres 1,25M. ¿Cuál es la masa de cristales anhidros?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q5_1','a')"><span class="opt-letter">a)</span>66,0 g CuSO₄·5H₂O → 42,2 g CuSO₄</div>
+        <div class="opt" onclick="selectOpt(this,'q5_1','b')"><span class="opt-letter">b)</span>55,0 g CuSO₄·5H₂O → 35,1 g CuSO₄</div>
+        <div class="opt" onclick="selectOpt(this,'q5_1','c')"><span class="opt-letter">c)</span>107 g CuSO₄·5H₂O → 68,4 g CuSO₄</div>
+        <div class="opt" onclick="selectOpt(this,'q5_1','d')"><span class="opt-letter">d)</span>48 g CuSO₄·5H₂O → 30,7 g CuSO₄</div>
+      </div>
+      <div class="answer-reveal" id="ans_q5_1">
+        ✓ <b>a) 66g CuSO₄·5H₂O → 42,2 g CuSO₄</b><br>
+        m_cristales = 0,55 × 120g = 66g CuSO₄·5H₂O<br>
+        66g × 159,5/249,5 = 42,2g CuSO₄ anhidro
+      </div>
+    </div>
+
+    <div class="question" id="q5_2">
+      <div class="q-text"><span class="q-pts">3 pts</span>En la purificación anterior, ¿cuál es el volumen de aguas madres? (η_operativo=89%)</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q5_2','a')"><span class="opt-letter">a)</span>50,6 mL</div>
+        <div class="opt" onclick="selectOpt(this,'q5_2','b')"><span class="opt-letter">b)</span>130,8 mL</div>
+        <div class="opt" onclick="selectOpt(this,'q5_2','c')"><span class="opt-letter">c)</span>89,0 mL</div>
+        <div class="opt" onclick="selectOpt(this,'q5_2','d')"><span class="opt-letter">d)</span>200 mL</div>
+      </div>
+      <div class="answer-reveal" id="ans_q5_2">
+        ✓ <b>b) 130,8 mL</b><br>
+        m_total = 0,89×120 = 106,8g → m_aguas madres = 106,8−66 = 40,8g CuSO₄·5H₂O<br>
+        1,25M: 249,5g/mol → 1000mL/1,25mol = 199,6mL/mol<br>
+        40,8g / 249,5g/mol × 1000mL/mol × 1/1,25 = 130,8 mL
+      </div>
+    </div>
+
+    <div class="question" id="q5_3">
+      <div class="q-text"><span class="q-pts">2 pts</span>Si se parte de una solución NO saturada a la temperatura inicial, el rendimiento de cristalización será:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q5_3','a')"><span class="opt-letter">a)</span>Mayor que el teórico</div>
+        <div class="opt" onclick="selectOpt(this,'q5_3','b')"><span class="opt-letter">b)</span>Igual que el teórico</div>
+        <div class="opt" onclick="selectOpt(this,'q5_3','c')"><span class="opt-letter">c)</span>Menor que el teórico</div>
+      </div>
+      <div class="answer-reveal" id="ans_q5_3">
+        ✓ <b>c) Menor</b><br>
+        Al no estar saturada, hay menos CuSO₄ que el máximo posible para esa T inicial. La masa de cristales potenciales es menor. El denominador (masa inicial) también es menor pero en menor proporción → rendimiento cae.
+      </div>
+    </div>
+
+    <div class="question" id="q5_4">
+      <div class="q-text"><span class="q-pts">3 pts</span>¿Por qué no puede reemplazarse NH₃ por NaOH en el ensayo previo?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q5_4','a')"><span class="opt-letter">a)</span>Porque NaOH no precipita el Fe(OH)₃</div>
+        <div class="opt" onclick="selectOpt(this,'q5_4','b')"><span class="opt-letter">b)</span>Porque NaOH precipitaría también el Cu como Cu(OH)₂ insoluble, impidiendo la separación</div>
+        <div class="opt" onclick="selectOpt(this,'q5_4','c')"><span class="opt-letter">c)</span>Porque NaOH es ácido y disuelve los cristales</div>
+        <div class="opt" onclick="selectOpt(this,'q5_4','d')"><span class="opt-letter">d)</span>Porque NaOH oxida el Fe²⁺</div>
+      </div>
+      <div class="answer-reveal" id="ans_q5_4">
+        ✓ <b>b)</b> NH₃ forma el complejo [Cu(NH₃)₄]²⁺ soluble (azul intenso) mientras que precipita Fe(OH)₃ → fácil separar. Con NaOH ambos precipitan como hidróxidos insolubles juntos.
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t5')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t5',12)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t5"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 6 ======= -->
+<div class="tema-section" id="t6">
+  <div class="tema-header" style="border-left-color:var(--t6)">
+    <div>
+      <div class="tema-num">TEMA 6</div>
+      <div class="tema-title">Termodinámica: ΔS, ΔG y espontaneidad</div>
+    </div>
+    <span class="tema-freq">6–8 pts · siempre entra</span>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Entropía — fórmulas</h3>
+      <code class="formula">ΔS = Q_rev / T</code>
+      <code class="formula">ΔS_fusión = ΔH_fusión / T_f</code>
+      <code class="formula">ΔS_gas_iso = n·R·ln(Vf/Vi) = n·R·ln(Pi/Pf)</code>
+      <code class="formula">ΔS_cale = n·Cp·ln(Tf/Ti)</code>
+      <p>ΔS_entorno = −W_irrev/T = −P_ext·ΔV/T</p>
+    </div>
+    <div class="theory-box">
+      <h3>Criterios de espontaneidad</h3>
+      <ul class="key-list">
+        <li>ΔS_universo &gt; 0 → espontáneo (válido siempre)</li>
+        <li>ΔG &lt; 0 → espontáneo (a T,P ctes)</li>
+        <li>ΔG = 0 → reversible / equilibrio</li>
+        <li>ΔG &gt; 0 → no espontáneo</li>
+      </ul>
+      <code class="formula">ΔG = ΔH − TΔS</code>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Condiciones de espontaneidad según signos ΔH y ΔS</h3>
+    <table class="error-table">
+      <tr><th>ΔH</th><th>ΔS</th><th>ΔG</th><th>Espontaneidad</th></tr>
+      <tr><td>−</td><td>+</td><td>siempre −</td><td>A toda temperatura</td></tr>
+      <tr><td>+</td><td>−</td><td>siempre +</td><td>Nunca espontánea</td></tr>
+      <tr><td>−</td><td>−</td><td>− si |ΔH|&gt;|TΔS|</td><td>A bajas temperaturas</td></tr>
+      <tr><td>+</td><td>+</td><td>− si TΔS&gt;ΔH</td><td>A altas temperaturas</td></tr>
+    </table>
+    <div class="warning">Para analizar ΔS de una reacción: contar moles gaseosos. Más moles de gas en productos → ΔS &gt; 0</div>
+  </div>
+
+  <div class="theory-box">
+    <h3>ΔG y equilibrio</h3>
+    <code class="formula">ΔG° = −RT·ln K</code>
+    <code class="formula">ΔG = ΔG° + RT·ln Q</code>
+    <p>En el equilibrio: ΔG = 0, Q = K</p>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 6</h3>
+      <span class="quiz-info">6 preguntas · máx 18 pts</span>
+    </div>
+
+    <div class="question" id="q6_1">
+      <div class="q-text"><span class="q-pts">3 pts</span>Calcular ΔS del sistema para la fusión de 2 mol de etanol a −114,1°C. ΔH_fusión = 4,80 kJ/mol.</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q6_1','a')"><span class="opt-letter">a)</span>60,4 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_1','b')"><span class="opt-letter">b)</span>30,2 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_1','c')"><span class="opt-letter">c)</span>−60,4 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_1','d')"><span class="opt-letter">d)</span>20,1 J/K</div>
+      </div>
+      <div class="answer-reveal" id="ans_q6_1">
+        ✓ <b>a) 60,4 J/K</b><br>
+        T = −114,1 + 273 = 158,9 K<br>
+        ΔS = 2×4800/158,9 = 60,4 J/K
+      </div>
+    </div>
+
+    <div class="question" id="q6_2">
+      <div class="q-text"><span class="q-pts">3 pts</span>Expansión isotérmica reversible de 2 mol de gas ideal a 25°C: Vi=3L → Vf=9L. ΔS_sistema y ΔS_universo:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q6_2','a')"><span class="opt-letter">a)</span>ΔS_sis=18,26 J/K; ΔS_univ=0</div>
+        <div class="opt" onclick="selectOpt(this,'q6_2','b')"><span class="opt-letter">b)</span>ΔS_sis=18,26 J/K; ΔS_univ=18,26 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_2','c')"><span class="opt-letter">c)</span>ΔS_sis=0; ΔS_univ=18,26 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_2','d')"><span class="opt-letter">d)</span>ΔS_sis=−18,26 J/K; ΔS_univ=0</div>
+      </div>
+      <div class="answer-reveal" id="ans_q6_2">
+        ✓ <b>a)</b><br>
+        ΔS = nR·ln(Vf/Vi) = 2×8,31×ln(3) = 18,26 J/K<br>
+        Reversible → ΔS_univ = 0 (ΔS_entorno = −18,26 J/K)
+      </div>
+    </div>
+
+    <div class="question" id="q6_3">
+      <div class="q-text"><span class="q-pts">3 pts</span>Para la reacción 4NH₃(g)+5O₂(g)→4NO(g)+6H₂O(g) con ΔH&lt;0, en qué condiciones es espontánea:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q6_3','a')"><span class="opt-letter">a)</span>Solo a bajas temperaturas</div>
+        <div class="opt" onclick="selectOpt(this,'q6_3','b')"><span class="opt-letter">b)</span>Solo a altas temperaturas</div>
+        <div class="opt" onclick="selectOpt(this,'q6_3','c')"><span class="opt-letter">c)</span>A toda temperatura</div>
+        <div class="opt" onclick="selectOpt(this,'q6_3','d')"><span class="opt-letter">d)</span>Nunca es espontánea</div>
+      </div>
+      <div class="answer-reveal" id="ans_q6_3">
+        ✓ <b>c) A toda temperatura</b><br>
+        ΔH &lt; 0 y ΔS &gt; 0 (pasan de 9 mol gas a 10 mol gas). ΔG = ΔH − TΔS &lt; 0 siempre.
+      </div>
+    </div>
+
+    <div class="question" id="q6_4">
+      <div class="q-text"><span class="q-pts">3 pts</span>ΔG° = −1455,6 J para una reacción a 25°C (K=1,80). Si Q=0,75, ¿cuánto vale ΔG?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q6_4','a')"><span class="opt-letter">a)</span>−2168 J</div>
+        <div class="opt" onclick="selectOpt(this,'q6_4','b')"><span class="opt-letter">b)</span>+712 J</div>
+        <div class="opt" onclick="selectOpt(this,'q6_4','c')"><span class="opt-letter">c)</span>−712 J</div>
+        <div class="opt" onclick="selectOpt(this,'q6_4','d')"><span class="opt-letter">d)</span>0 J</div>
+      </div>
+      <div class="answer-reveal" id="ans_q6_4">
+        ✓ <b>a) −2168 J</b><br>
+        ΔG = ΔG° + RT·lnQ = −1455,6 + 8,31×298×ln(0,75) = −1455,6 + (−712) = −2168 J
+      </div>
+    </div>
+
+    <div class="question" id="q6_5">
+      <div class="q-text"><span class="q-pts">3 pts</span>Para C(s) + CO₂(g) → 2CO(g) con ΔH>0, en qué condiciones es espontánea:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q6_5','a')"><span class="opt-letter">a)</span>A toda temperatura</div>
+        <div class="opt" onclick="selectOpt(this,'q6_5','b')"><span class="opt-letter">b)</span>A altas temperaturas</div>
+        <div class="opt" onclick="selectOpt(this,'q6_5','c')"><span class="opt-letter">c)</span>A bajas temperaturas</div>
+        <div class="opt" onclick="selectOpt(this,'q6_5','d')"><span class="opt-letter">d)</span>Nunca</div>
+      </div>
+      <div class="answer-reveal" id="ans_q6_5">
+        ✓ <b>b) A altas temperaturas</b><br>
+        ΔH>0, ΔS>0 (1 mol gas → 2 mol gas). ΔG = ΔH − TΔS &lt; 0 cuando T·ΔS &gt; ΔH → altas T.
+      </div>
+    </div>
+
+    <div class="question" id="q6_6">
+      <div class="q-text"><span class="q-pts">3 pts</span>Expansión isotérmica IRREVERSIBLE de 2 mol de gas ideal a 25°C: Pi=3,665 atm → Pf=1,50 atm. ΔS_universo =</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q6_6','a')"><span class="opt-letter">a)</span>0 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_6','b')"><span class="opt-letter">b)</span>3,02 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_6','c')"><span class="opt-letter">c)</span>−3,02 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'q6_6','d')"><span class="opt-letter">d)</span>8,91 J/K</div>
+      </div>
+      <div class="answer-reveal" id="ans_q6_6">
+        ✓ <b>b) 3,02 J/K</b><br>
+        ΔS_sis = 8,91 J/K (mismo que reversible)<br>
+        Vf = nRT/Pf = 19,55L; ΔS_entorno = −Pf·ΔV/T·(R/R) = −5,89 J/K<br>
+        ΔS_univ = 8,91 − 5,89 = 3,02 J/K &gt; 0 ✓ irreversible espontáneo
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t6')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t6',18)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t6"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 7 ======= -->
+<div class="tema-section" id="t7">
+  <div class="tema-header" style="border-left-color:var(--t7)">
+    <div>
+      <div class="tema-num">TEMA 7</div>
+      <div class="tema-title">Equilibrio químico</div>
+    </div>
+    <span class="tema-freq">Siempre en pregunta 3 · 5–9 pts</span>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Kc, Kp y su relación</h3>
+      <code class="formula">Kp = Kc·(RT)^Δn</code>
+      <p>Δn = mol gas productos − mol gas reactivos</p>
+      <code class="formula">ΔG° = −RT·ln K</code>
+      <code class="formula">ln(K₂/K₁) = (ΔH°/R)·(1/T₁ − 1/T₂)</code>
+      <p>Ecuación de van't Hoff: relación K con T</p>
+    </div>
+    <div class="theory-box">
+      <h3>Principio de Le Chatelier</h3>
+      <ul class="key-list">
+        <li>↑ concentración reactivo → desplaza → productos</li>
+        <li>↑ T reacción exotérmica → K disminuye (← reactivos)</li>
+        <li>↑ T reacción endotérmica → K aumenta (→ productos)</li>
+        <li>↓ V → desplaza hacia donde hay menos moles de gas</li>
+        <li>Agregar gas inerte → sin efecto</li>
+        <li>Catalizador → no cambia K</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="theory-box">
+    <h3>Sólidos e iones en Kc</h3>
+    <p>Los sólidos y líquidos puros NO aparecen en la expresión de Kc. Solo especies gaseosas o en solución acuosa.</p>
+    <code class="formula">Para: 2S(g) + C(s) ⇌ CS₂(g) → Kp = P_CS₂ / P_S²</code>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 7</h3>
+      <span class="quiz-info">5 preguntas · máx 16 pts</span>
+    </div>
+
+    <div class="question" id="q7_1">
+      <div class="q-text"><span class="q-pts">4 pts</span>Para H₂(g)+I₂(g)⇌2HI(g), Kc=65 a 520°C. En 2,50L: 0,018g H₂ y 3,44g HI. ¿Las concentraciones en equilibrio? [H₂]₀=0,00360M, [HI]₀=0,01075M (PAR: H=1, I=127)</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q7_1','a')"><span class="opt-letter">a)</span>[H₂]=0,00398M, [I₂]=0,000385M, [HI]=0,00998M</div>
+        <div class="opt" onclick="selectOpt(this,'q7_1','b')"><span class="opt-letter">a)</span>[H₂]=0,001M, [I₂]=0,001M, [HI]=0,012M</div>
+        <div class="opt" onclick="selectOpt(this,'q7_1','c')"><span class="opt-letter">c)</span>[H₂]=0,004M, [I₂]=0M, [HI]=0,0075M</div>
+        <div class="opt" onclick="selectOpt(this,'q7_1','d')"><span class="opt-letter">d)</span>[H₂]=0,003M, [I₂]=0,003M, [HI]=0,015M</div>
+      </div>
+      <div class="answer-reveal" id="ans_q7_1">
+        ✓ <b>a)</b><br>
+        El equilibrio se desplaza hacia los reactivos (Q>K si hay mucho HI). x≈0,000385<br>
+        [H₂]=0,00360+x=0,00398M | [I₂]=x=0,000385M | [HI]=0,01075−2x=0,00998M
+      </div>
+    </div>
+
+    <div class="question" id="q7_2">
+      <div class="q-text"><span class="q-pts">3 pts</span>Para Ni(s)+4CO(g)⇌Ni(CO)₄(g), ΔH°=−161kJ. ¿Qué ocurre con [CO] y K si se AUMENTA la temperatura?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q7_2','a')"><span class="opt-letter">a)</span>[CO] aumenta, K disminuye</div>
+        <div class="opt" onclick="selectOpt(this,'q7_2','b')"><span class="opt-letter">b)</span>[CO] disminuye, K aumenta</div>
+        <div class="opt" onclick="selectOpt(this,'q7_2','c')"><span class="opt-letter">c)</span>[CO] aumenta, K no cambia</div>
+        <div class="opt" onclick="selectOpt(this,'q7_2','d')"><span class="opt-letter">d)</span>[CO] disminuye, K disminuye</div>
+      </div>
+      <div class="answer-reveal" id="ans_q7_2">
+        ✓ <b>a)</b><br>
+        Exotérmica: ↑T desplaza hacia reactivos → [CO]↑ (se genera más CO) y K disminuye
+      </div>
+    </div>
+
+    <div class="question" id="q7_3">
+      <div class="q-text"><span class="q-pts">3 pts</span>Para la reacción 2CO₂(g)⇌2CO(g)+O₂(g), Kp=6,15 a 3000K. Si las presiones parciales son todas 0,50 atm, ΔG° y ΔG:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q7_3','a')"><span class="opt-letter">a)</span>ΔG°=−45284 J; ΔG=−62564 J</div>
+        <div class="opt" onclick="selectOpt(this,'q7_3','b')"><span class="opt-letter">b)</span>ΔG°=+45284 J; ΔG=+62564 J</div>
+        <div class="opt" onclick="selectOpt(this,'q7_3','c')"><span class="opt-letter">c)</span>ΔG°=−45284 J; ΔG=+5000 J</div>
+        <div class="opt" onclick="selectOpt(this,'q7_3','d')"><span class="opt-letter">d)</span>ΔG°=0; ΔG=−62564 J</div>
+      </div>
+      <div class="answer-reveal" id="ans_q7_3">
+        ✓ <b>a)</b><br>
+        ΔG°=−RT·lnK=−8,31×3000×ln(6,15)=−45284 J<br>
+        Qp=(0,5)²×0,5/(0,5)²=0,5<br>
+        ΔG=−45284+8,31×3000×ln(0,5)=−45284−17280=−62564 J
+      </div>
+    </div>
+
+    <div class="question" id="q7_4">
+      <div class="q-text"><span class="q-pts">3 pts</span>Kp=18,80 a 630°C y Kp=5,40 a 800°C para 2S(g)+C(s)⇌CS₂(g). ¿La reacción es endo o exotérmica? Calculá ΔH°:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q7_4','a')"><span class="opt-letter">a)</span>Exotérmica; ΔH°=−59236 J/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q7_4','b')"><span class="opt-letter">b)</span>Endotérmica; ΔH°=+59236 J/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q7_4','c')"><span class="opt-letter">c)</span>Exotérmica; ΔH°=−120000 J/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q7_4','d')"><span class="opt-letter">d)</span>Endotérmica; ΔH°=+20000 J/mol</div>
+      </div>
+      <div class="answer-reveal" id="ans_q7_4">
+        ✓ <b>a) Exotérmica; ΔH°≈−59237 J/mol</b><br>
+        K disminuye al ↑T → exotérmica<br>
+        ln(5,4/18,8) = (ΔH°/8,31)×(1/903−1/1073)<br>
+        −1,2475 = (ΔH°/8,31)×(1,754×10⁻⁴) → ΔH°=−59237 J/mol
+      </div>
+    </div>
+
+    <div class="question" id="q7_5">
+      <div class="q-text"><span class="q-pts">3 pts</span>Para Ni(s)+4CO(g)⇌Ni(CO)₄(g), ¿qué ocurre con K y [CO] si se DISMINUYE el volumen del recipiente?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q7_5','a')"><span class="opt-letter">a)</span>[CO] disminuye, K no varía</div>
+        <div class="opt" onclick="selectOpt(this,'q7_5','b')"><span class="opt-letter">b)</span>[CO] disminuye, K disminuye</div>
+        <div class="opt" onclick="selectOpt(this,'q7_5','c')"><span class="opt-letter">c)</span>[CO] aumenta, K no varía</div>
+        <div class="opt" onclick="selectOpt(this,'q7_5','d')"><span class="opt-letter">d)</span>[CO] aumenta, K aumenta</div>
+      </div>
+      <div class="answer-reveal" id="ans_q7_5">
+        ✓ <b>a)</b><br>
+        ↓V → ↑P → equilibrio se desplaza hacia donde hay menos moles de gas (productos: 1 mol vs 4 mol reactivos) → CO se consume → [CO]↓. K no varía (no cambia T).
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t7')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t7',16)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t7"></div>
+  </div>
+</div>
+
+<!-- ======= TEMA 8 ======= -->
+<div class="tema-section" id="t8">
+  <div class="tema-header" style="border-left-color:var(--t8)">
+    <div>
+      <div class="tema-num">TEMA 8</div>
+      <div class="tema-title">Cinética química</div>
+    </div>
+    <span class="tema-freq">Siempre en pregunta 3 · 3–6 pts</span>
+  </div>
+
+  <div class="theory-box">
+    <h3>Leyes integradas — las 3 que entran</h3>
+    <table class="error-table">
+      <tr><th>Orden</th><th>Ley integrada</th><th>t½</th><th>Unidades k</th></tr>
+      <tr><td>0</td><td>[A]t = [A]₀ − kt</td><td>t½ = [A]₀/2k</td><td>M/s</td></tr>
+      <tr><td>1</td><td>ln[A]t = ln[A]₀ − kt</td><td>t½ = ln2/k = 0,693/k</td><td>s⁻¹</td></tr>
+      <tr><td>2</td><td>1/[A]t = 1/[A]₀ + kt</td><td>t½ = 1/k[A]₀</td><td>M⁻¹s⁻¹</td></tr>
+    </table>
+    <code class="formula">ln(k₂/k₁) = (Ea/R)·(1/T₁ − 1/T₂)    [Arrhenius integrado]</code>
+  </div>
+
+  <div class="two-col">
+    <div class="theory-box">
+      <h3>Mecanismos de reacción</h3>
+      <ul class="key-list">
+        <li>Etapa limitante (lenta) determina la ley de velocidad global</li>
+        <li>Intermediario: especie que se forma y consume (no en reactivos ni productos globales)</li>
+        <li>Molecularidad: N° de moléculas que colisionan en una etapa elemental</li>
+        <li>Orden: determinado experimentalmente por los exponentes de la ley de velocidad</li>
+      </ul>
+    </div>
+    <div class="theory-box">
+      <h3>Energía de activación Ea</h3>
+      <p>Energía mínima necesaria para que la colisión produzca reacción. El catalizador la reduce pero no cambia K ni ΔG°.</p>
+      <div class="tip">Las unidades de k dan el orden: s⁻¹ → orden 1; M⁻¹s⁻¹ → orden 2</div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <h3>Quiz Tema 8</h3>
+      <span class="quiz-info">5 preguntas · máx 14 pts</span>
+    </div>
+
+    <div class="question" id="q8_1">
+      <div class="q-text"><span class="q-pts">3 pts</span>2N₂O₅ → 4NO₂ + O₂ es de primer orden, t½=140s. Si [N₂O₅]₀=0,025M, ¿cuánto tiempo para que quede solo el 10%?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q8_1','a')"><span class="opt-letter">a)</span>465 s</div>
+        <div class="opt" onclick="selectOpt(this,'q8_1','b')"><span class="opt-letter">b)</span>140 s</div>
+        <div class="opt" onclick="selectOpt(this,'q8_1','c')"><span class="opt-letter">c)</span>280 s</div>
+        <div class="opt" onclick="selectOpt(this,'q8_1','d')"><span class="opt-letter">d)</span>930 s</div>
+      </div>
+      <div class="answer-reveal" id="ans_q8_1">
+        ✓ <b>a) 465 s</b><br>
+        k = ln2/140 = 0,00495 s⁻¹<br>
+        ln(0,10×[A]₀/[A]₀) = −kt → ln(0,10) = −0,00495×t → t = 465 s
+      </div>
+    </div>
+
+    <div class="question" id="q8_2">
+      <div class="q-text"><span class="q-pts">3 pts</span>k=0,105 M⁻¹s⁻¹ a 700K y k=0,843 M⁻¹s⁻¹ a 740K. ¿Cuánto vale Ea?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q8_2','a')"><span class="opt-letter">a)</span>224269 J/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q8_2','b')"><span class="opt-letter">b)</span>15000 J/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q8_2','c')"><span class="opt-letter">c)</span>45000 J/mol</div>
+        <div class="opt" onclick="selectOpt(this,'q8_2','d')"><span class="opt-letter">d)</span>100000 J/mol</div>
+      </div>
+      <div class="answer-reveal" id="ans_q8_2">
+        ✓ <b>a) 224269 J/mol</b><br>
+        ln(0,843/0,105) = (Ea/8,31)×(1/700−1/740)<br>
+        2,083 = (Ea/8,31)×(7,72×10⁻⁵) → Ea = 224269 J/mol
+      </div>
+    </div>
+
+    <div class="question" id="q8_3">
+      <div class="q-text"><span class="q-pts">2 pts</span>Para C₂F₄ → ½C₄F₈ de segundo orden, k=0,0444 M⁻¹s⁻¹, [C₂F₄]₀=0,060M. ¿Cuál es t½?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q8_3','a')"><span class="opt-letter">a)</span>375 s</div>
+        <div class="opt" onclick="selectOpt(this,'q8_3','b')"><span class="opt-letter">b)</span>140 s</div>
+        <div class="opt" onclick="selectOpt(this,'q8_3','c')"><span class="opt-letter">c)</span>0,693/0,044 s</div>
+        <div class="opt" onclick="selectOpt(this,'q8_3','d')"><span class="opt-letter">d)</span>750 s</div>
+      </div>
+      <div class="answer-reveal" id="ans_q8_3">
+        ✓ <b>a) 375 s</b><br>
+        t½(orden 2) = 1/(k·[A]₀) = 1/(0,0444×0,060) = 375 s
+      </div>
+    </div>
+
+    <div class="question" id="q8_4">
+      <div class="q-text"><span class="q-pts">3 pts</span>Para A₂(g)+2B(g)→2AB(g), la velocidad se cuadruplica al duplicar [B] pero no cambia con [A₂]. ¿Cuál es la ecuación de velocidad y la etapa limitante más probable?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q8_4','a')"><span class="opt-letter">a)</span>v=k[A₂][B]; etapa: A₂+B→AB (bimolecular)</div>
+        <div class="opt" onclick="selectOpt(this,'q8_4','b')"><span class="opt-letter">b)</span>v=k[B]²; etapa: 2B→B₂ (bimolecular)</div>
+        <div class="opt" onclick="selectOpt(this,'q8_4','c')"><span class="opt-letter">c)</span>v=k[B]; etapa: B→(lento)</div>
+        <div class="opt" onclick="selectOpt(this,'q8_4','d')"><span class="opt-letter">d)</span>v=k[A₂]²; etapa: 2A₂→(lento)</div>
+      </div>
+      <div class="answer-reveal" id="ans_q8_4">
+        ✓ <b>b) v=k[B]²</b><br>
+        Cuadruplicar v al duplicar [B] → orden 2 en B. No depende de [A₂] → orden 0 en A₂.<br>
+        Etapa lenta: 2B(g)→B₂(g) (bimolecular)
+      </div>
+    </div>
+
+    <div class="question" id="q8_5">
+      <div class="q-text"><span class="q-pts">3 pts</span>¿Qué efecto tiene un catalizador sobre la reacción?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'q8_5','a')"><span class="opt-letter">a)</span>Aumenta K y disminuye Ea</div>
+        <div class="opt" onclick="selectOpt(this,'q8_5','b')"><span class="opt-letter">b)</span>Disminuye Ea, no cambia K ni ΔG°</div>
+        <div class="opt" onclick="selectOpt(this,'q8_5','c')"><span class="opt-letter">c)</span>No cambia Ea pero aumenta K</div>
+        <div class="opt" onclick="selectOpt(this,'q8_5','d')"><span class="opt-letter">d)</span>Disminuye Ea y aumenta ΔG°</div>
+      </div>
+      <div class="answer-reveal" id="ans_q8_5">
+        ✓ <b>b)</b><br>
+        El catalizador provee un mecanismo alternativo de menor Ea → acelera AMBAS reacciones (directa e inversa) en igual proporción → K no cambia, ΔG° no cambia.
+      </div>
+    </div>
+
+    <div class="quiz-controls">
+      <button class="btn btn-secondary" onclick="resetQuiz('t8')">Reiniciar</button>
+      <button class="btn btn-primary" onclick="checkQuiz('t8',14)">Ver puntaje</button>
+    </div>
+    <div class="score-display" id="score_t8"></div>
+  </div>
+</div>
+
+<!-- ======= QUIZ MASTER PARCIAL ======= -->
+<div class="quiz-master-section" id="quiz-master">
+  <div class="section-title">🎯 Simulacro Primer Parcial</div>
+  <p style="color:var(--text-muted);font-size:0.87rem;margin-bottom:0.5rem;">Puntuación igual a la del parcial real · Aprobás con 60 puntos · Tiempo estimado: 3hs</p>
+
+  <div style="background:rgba(232,200,64,0.06);border:1px solid rgba(232,200,64,0.2);border-radius:5px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:0.85rem;color:#c9c5bb;">
+    <b style="color:var(--accent)">Estructura del parcial:</b> 3 preguntas grandes de ~30-33 pts c/u. Pregunta 1: T1+T2+T3. Pregunta 2: T4+T5+T6. Pregunta 3: T7+T8.
+  </div>
+
+  <!-- PREGUNTA 1 -->
+  <div style="margin-bottom:2rem;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--t1);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">PREGUNTA 1 — Gases, cristales y presión de vapor (33 pts)</h3>
+
+    <div class="question" id="qm_1">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T1] Con un equipo similar al TP se midió Pvap=335,6 torr para éter etílico (C₄H₈O) a 17°C. h_Hg en el manómetro era 43,0 cm y h_agua sobre ampolla era 9,0 cm. δ(Hg)=13,6 g/cm³. ¿Cuál fue la presión atmosférica?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_1','a')"><span class="opt-letter">a)</span>0,997 atm</div>
+        <div class="opt" onclick="selectOpt(this,'qm_1','b')"><span class="opt-letter">b)</span>1,023 atm</div>
+        <div class="opt" onclick="selectOpt(this,'qm_1','c')"><span class="opt-letter">c)</span>0,876 atm</div>
+        <div class="opt" onclick="selectOpt(this,'qm_1','d')"><span class="opt-letter">d)</span>1,100 atm</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_1">
+        ✓ <b>a) 0,997 atm</b><br>
+        P_agua=9,0/13,6=0,662 cmHg=0,0087 atm<br>
+        P_atm = P_vapor + P_Hg − P_agua = 335,6/760 + 43,0/76 − 0,0087 = 0,4416+0,5658−0,0087 = 0,9987 atm
+      </div>
+    </div>
+
+    <div class="question" id="qm_2">
+      <div class="q-text"><span class="q-pts">4 pts</span>[T1] La Teb normal del éter etílico es 34,6°C. ¿Cuántos J se necesitan para evaporar 1g de C₄H₈O? MM=72 g/mol, R=8,31 J/Kmol</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_2','a')"><span class="opt-letter">a)</span>480 J/g</div>
+        <div class="opt" onclick="selectOpt(this,'qm_2','b')"><span class="opt-letter">b)</span>3460 J/g</div>
+        <div class="opt" onclick="selectOpt(this,'qm_2','c')"><span class="opt-letter">c)</span>125 J/g</div>
+        <div class="opt" onclick="selectOpt(this,'qm_2','d')"><span class="opt-letter">d)</span>960 J/g</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_2">
+        ✓ <b>a) 480 J/g</b><br>
+        CC: ln(1/0,441) = ΔH/8,31×(1/290−1/307,6) → ΔH=34600 J/mol<br>
+        34600/72 g/mol = 480 J/g
+      </div>
+    </div>
+
+    <div class="question" id="qm_3">
+      <div class="q-text"><span class="q-pts">5 pts</span>[T2] Calcular densidad del Mo (BCC, r=136pm). PAR Mo=96.</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_3','a')"><span class="opt-letter">a)</span>10,3 g/cm³</div>
+        <div class="opt" onclick="selectOpt(this,'qm_3','b')"><span class="opt-letter">b)</span>7,8 g/cm³</div>
+        <div class="opt" onclick="selectOpt(this,'qm_3','c')"><span class="opt-letter">c)</span>15,2 g/cm³</div>
+        <div class="opt" onclick="selectOpt(this,'qm_3','d')"><span class="opt-letter">d)</span>5,4 g/cm³</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_3">
+        ✓ <b>a) 10,3 g/cm³</b><br>
+        BCC: a=4r/√3=4×1,36×10⁻⁸/1,732=3,14×10⁻⁸cm<br>
+        V=3,098×10⁻²³cm³ · masa(2át)=2×96/6,022×10²³=3,19×10⁻²²g<br>
+        d=3,19×10⁻²²/3,098×10⁻²³=10,3 g/cm³
+      </div>
+    </div>
+
+    <div class="question" id="qm_4">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T3] 2,00 mol de CO₂ en 1,00L a 25°C. Calcular P con vdW. a(CO₂)=3,64 L²atm/mol², b(CO₂)=0,0427 L/mol</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_4','a')"><span class="opt-letter">a)</span>38,87 atm</div>
+        <div class="opt" onclick="selectOpt(this,'qm_4','b')"><span class="opt-letter">b)</span>48,87 atm (ideal)</div>
+        <div class="opt" onclick="selectOpt(this,'qm_4','c')"><span class="opt-letter">c)</span>52,3 atm</div>
+        <div class="opt" onclick="selectOpt(this,'qm_4','d')"><span class="opt-letter">d)</span>44,5 atm</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_4">
+        ✓ <b>a) 38,87 atm</b><br>
+        P=2×0,082×298/(1−2×0,0427) − 4×3,64/1=48,87/0,9146−14,56=53,43−14,56=38,87 atm<br>
+        (La presión real es MENOR que la ideal: fuerzas de dispersión del CO₂)
+      </div>
+    </div>
+
+    <div class="question" id="qm_5">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T1-error] La presión atmosférica medida fue MENOR que la real. El error en Pvap es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_5','a')"><span class="opt-letter">a)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'qm_5','b')"><span class="opt-letter">b)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'qm_5','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_5">
+        ✓ <b>b) Por defecto</b><br>
+        Se usó P_atm menor a la real en P_vapor=(P_atm−P_Hg)+P_agua → P_vapor calculada &lt; real
+      </div>
+    </div>
+
+    <div class="question" id="qm_6">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T2] Los radios iónicos de Sr²⁺=113pm y S²⁻=184pm. ¿Qué estructura cristaliza el SrS?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_6','a')"><span class="opt-letter">a)</span>Blenda (ZnS), NC=4</div>
+        <div class="opt" onclick="selectOpt(this,'qm_6','b')"><span class="opt-letter">b)</span>NaCl, NC=6</div>
+        <div class="opt" onclick="selectOpt(this,'qm_6','c')"><span class="opt-letter">c)</span>CsCl, NC=8</div>
+        <div class="opt" onclick="selectOpt(this,'qm_6','d')"><span class="opt-letter">d)</span>Fluorita, NC=8</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_6">
+        ✓ <b>b) NaCl, NC=6</b><br>
+        r₊/r₋ = 113/184 = 0,61 → rango 0,414–0,732 → red tipo NaCl, huecos octaédricos
+      </div>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 2 -->
+  <div style="margin-bottom:2rem;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--t4);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">PREGUNTA 2 — Coligativas, CuSO₄ y Termodinámica (34 pts)</h3>
+
+    <div class="question" id="qm_7">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T4] Solución acuosa 3,50% p/v de sustancia AB, ρ=1,08 g/mL, solidifica a −0,460°C. AB se disocia en 7,50%. Kc=1,86°C·kg/mol. ¿PM de AB?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_7','a')"><span class="opt-letter">a)</span>145,6 g/mol</div>
+        <div class="opt" onclick="selectOpt(this,'qm_7','b')"><span class="opt-letter">b)</span>180 g/mol</div>
+        <div class="opt" onclick="selectOpt(this,'qm_7','c')"><span class="opt-letter">c)</span>92 g/mol</div>
+        <div class="opt" onclick="selectOpt(this,'qm_7','d')"><span class="opt-letter">d)</span>230 g/mol</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_7">
+        ✓ <b>a) 145,6 g/mol</b><br>
+        i=1+0,075×1=1,075 | m=0,460/(1,075×1,86)=0,230 molal<br>
+        masa agua=100mL×1,08g/mL−3,50g=104,5g | en 1000g: 33,49g AB<br>
+        PM=33,49/0,230=145,6 g/mol
+      </div>
+    </div>
+
+    <div class="question" id="qm_8">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T5] η_crist=38%, η_op=92%, masa inicial=50g CuSO₄·5H₂O (MM=249,5). ¿Masa cristales anhidros y M aguas madres en 450mL?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_8','a')"><span class="opt-letter">a)</span>12,15g CuSO₄; 0,240 M</div>
+        <div class="opt" onclick="selectOpt(this,'qm_8','b')"><span class="opt-letter">b)</span>19g CuSO₄; 1,25 M</div>
+        <div class="opt" onclick="selectOpt(this,'qm_8','c')"><span class="opt-letter">c)</span>30g CuSO₄; 0,50 M</div>
+        <div class="opt" onclick="selectOpt(this,'qm_8','d')"><span class="opt-letter">d)</span>12,15g CuSO₄; 1,25 M</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_8">
+        ✓ <b>a) 12,15g; 0,240M</b><br>
+        m_crist=0,38×50=19g CuSO₄·5H₂O → ×159,5/249,5=12,15g CuSO₄<br>
+        m_am=(0,92×50)−19=27g CuSO₄·5H₂O → 0,108mol → 0,108/0,450=0,240M
+      </div>
+    </div>
+
+    <div class="question" id="qm_9">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T6] 5,0 mol gas ideal a 25°C y 5,0 atm se expanden hasta 40,0 L isotérmica e IRREVERSIBLEMENTE contra Pf. Calcular ΔS_sistema y ΔS_entorno. Cp=5/2R</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_9','a')"><span class="opt-letter">a)</span>ΔS_sis=20,5 J/K; ΔS_ent=−15,87 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'qm_9','b')"><span class="opt-letter">b)</span>ΔS_sis=20,5 J/K; ΔS_ent=−20,5 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'qm_9','c')"><span class="opt-letter">c)</span>ΔS_sis=51,2 J/K; ΔS_ent=−51,2 J/K</div>
+        <div class="opt" onclick="selectOpt(this,'qm_9','d')"><span class="opt-letter">d)</span>ΔS_sis=0; ΔS_ent=0</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_9">
+        ✓ <b>a)</b><br>
+        Vi=5×0,082×298/5=24,44L; Pf=5×0,082×298/40=3,06 atm<br>
+        ΔS_sis=5×8,31×ln(40/24,44)=20,5 J/K<br>
+        ΔS_ent=−Pf×ΔV/T=−3,06×(40−24,44)×8,31/(0,082×298)=−15,87 J/K
+      </div>
+    </div>
+
+    <div class="question" id="qm_10">
+      <div class="q-text"><span class="q-pts">4 pts</span>[T6] Para P₄(s)+6Cl₂(g)→4PCl₃(g) con ΔH&lt;0, ¿en qué condiciones es espontánea?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_10','a')"><span class="opt-letter">a)</span>A toda temperatura</div>
+        <div class="opt" onclick="selectOpt(this,'qm_10','b')"><span class="opt-letter">b)</span>A bajas temperaturas</div>
+        <div class="opt" onclick="selectOpt(this,'qm_10','c')"><span class="opt-letter">c)</span>A altas temperaturas</div>
+        <div class="opt" onclick="selectOpt(this,'qm_10','d')"><span class="opt-letter">d)</span>Nunca</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_10">
+        ✓ <b>b) A bajas temperaturas</b><br>
+        ΔH&lt;0, ΔS&lt;0 (6 mol gas→4 mol gas). ΔG=ΔH−TΔS: ΔH&lt;0, −TΔS&gt;0 (pues ΔS&lt;0)<br>
+        ΔG&lt;0 solo si |ΔH| &gt; T|ΔS| → bajas T
+      </div>
+    </div>
+
+    <div class="question" id="qm_11">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T4] En el TP de crioscopía, si al medir Tf del solvente se cayó sal inadvertidamente, el error en PM es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_11','a')"><span class="opt-letter">a)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'qm_11','b')"><span class="opt-letter">b)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'qm_11','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_11">
+        ✓ <b>a) Por exceso</b><br>
+        Si cae sal al medir Tf del solvente: Tf solvente detectada &lt; 0°C → ΔTc=Tf°−Tf_solución es menor → molalidad↓ → PM↑ (exceso)
+      </div>
+    </div>
+
+    <div class="question" id="qm_12">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T5 V/F] "El NH₃ no puede sustituirse por NaOH en el ensayo previo del TP de purificación de CuSO₄." Esto es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_12','a')"><span class="opt-letter">a)</span>VERDADERO, porque NH₃ forma [Cu(NH₃)₄]²⁺ soluble mientras precipita solo Fe(OH)₃</div>
+        <div class="opt" onclick="selectOpt(this,'qm_12','b')"><span class="opt-letter">b)</span>FALSO, NaOH puede usarse sin diferencia</div>
+        <div class="opt" onclick="selectOpt(this,'qm_12','c')"><span class="opt-letter">c)</span>VERDADERO, porque NH₃ oxida el Fe²⁺</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_12">
+        ✓ <b>a) VERDADERO</b><br>
+        NH₃ permite separar Cu de Fe: forma complejo azul [Cu(NH₃)₄]²⁺ soluble; Fe precipita como Fe(OH)₃. NaOH precipitaría ambos como hidróxidos insolubles → no hay separación posible.
+      </div>
+    </div>
+  </div>
+
+  <!-- PREGUNTA 3 -->
+  <div style="margin-bottom:2rem;">
+    <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--t7);margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);">PREGUNTA 3 — Equilibrio y Cinética (33 pts)</h3>
+
+    <div class="question" id="qm_13">
+      <div class="q-text"><span class="q-pts">9 pts</span>[T7] Se mezclan 250mL de KI 0,120M y 125mL de FeCl₃ 0,190M. Al equilibrio se titulan 10,00mL gastando 11,40mL de Na₂S₂O₃ 0,0318M. Calcular Ke de: 2I⁻+2Fe³⁺⇌I₂+2Fe²⁺</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_13','a')"><span class="opt-letter">a)</span>Ke ≈ 16,5</div>
+        <div class="opt" onclick="selectOpt(this,'qm_13','b')"><span class="opt-letter">b)</span>Ke ≈ 3,07</div>
+        <div class="opt" onclick="selectOpt(this,'qm_13','c')"><span class="opt-letter">c)</span>Ke ≈ 0,8</div>
+        <div class="opt" onclick="selectOpt(this,'qm_13','d')"><span class="opt-letter">d)</span>Ke ≈ 45</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_13">
+        ✓ <b>a) Ke ≈ 16,5</b><br>
+        [I₂]=0,018M (ver parcial 2024-2F) | [I⁻]₀=0,080M, [Fe³⁺]₀=0,063M<br>
+        [I⁻]eq=0,044M; [Fe³⁺]eq=0,027M; [Fe²⁺]=0,036M<br>
+        Ke=(0,018×0,036²)/(0,044²×0,027²)=16,5
+      </div>
+    </div>
+
+    <div class="question" id="qm_14">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T7] Para CH₄(g)+2O₂(g)⇌CO₂(g)+2H₂O(l) (ΔH&lt;0). ¿Qué ocurre con P_O₂, desplazamiento del equilibrio y Kp si se DISMINUYE el volumen?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_14','a')"><span class="opt-letter">a)</span>P_O₂↑, equilibrio → productos, Kp no cambia</div>
+        <div class="opt" onclick="selectOpt(this,'qm_14','b')"><span class="opt-letter">b)</span>P_O₂↑, equilibrio → reactivos, Kp no cambia</div>
+        <div class="opt" onclick="selectOpt(this,'qm_14','c')"><span class="opt-letter">c)</span>P_O₂↑, equilibrio → productos, Kp aumenta</div>
+        <div class="opt" onclick="selectOpt(this,'qm_14','d')"><span class="opt-letter">d)</span>P_O₂ no cambia, equilibrio → productos, Kp no cambia</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_14">
+        ✓ <b>a)</b><br>
+        ↓V → ↑P → equilibrio se desplaza hacia donde hay menos moles de gas. Reactivos: 1+2=3 mol gas. Productos: 1+0=1 mol gas. → desplaza → productos → P_O₂ aumenta pero luego parte se consume. Kp no cambia (T cte).
+      </div>
+    </div>
+
+    <div class="question" id="qm_15">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T8] La reacción A(g)→B(g)+½C(g) es de orden 1. En 15 min, [A] baja de 0,0450M a 0,0300M. ¿k y concentraciones de B y C a los 15 min?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_15','a')"><span class="opt-letter">a)</span>k=0,027 min⁻¹; [B]=0,015M; [C]=0,0075M</div>
+        <div class="opt" onclick="selectOpt(this,'qm_15','b')"><span class="opt-letter">b)</span>k=0,027 min⁻¹; [B]=0,030M; [C]=0,015M</div>
+        <div class="opt" onclick="selectOpt(this,'qm_15','c')"><span class="opt-letter">c)</span>k=0,010 min⁻¹; [B]=0,015M; [C]=0,0075M</div>
+        <div class="opt" onclick="selectOpt(this,'qm_15','d')"><span class="opt-letter">d)</span>k=0,054 min⁻¹; [B]=0,030M; [C]=0,015M</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_15">
+        ✓ <b>a)</b><br>
+        k=(ln0,045−ln0,030)/15=0,405/15=0,027 min⁻¹<br>
+        x=[A]₀−[A]t=0,045−0,030=0,015M consumido → [B]=x=0,015M, [C]=x/2=0,0075M
+      </div>
+    </div>
+
+    <div class="question" id="qm_16">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T8] k=0,100 s⁻¹ a 10°C y k=0,200 s⁻¹ a 30°C. Ea=? ¿Y el orden de la reacción?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_16','a')"><span class="opt-letter">a)</span>Ea≈24696 J/mol; orden 1</div>
+        <div class="opt" onclick="selectOpt(this,'qm_16','b')"><span class="opt-letter">b)</span>Ea≈24696 J/mol; orden 2</div>
+        <div class="opt" onclick="selectOpt(this,'qm_16','c')"><span class="opt-letter">c)</span>Ea≈100000 J/mol; orden 1</div>
+        <div class="opt" onclick="selectOpt(this,'qm_16','d')"><span class="opt-letter">d)</span>Ea≈24696 J/mol; orden 0</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_16">
+        ✓ <b>a) Ea≈24696 J/mol; orden 1</b><br>
+        ln(0,2/0,1)=Ea/8,31×(1/283−1/303) → ln2=Ea/8,31×0,000233 → Ea=24696 J/mol<br>
+        Unidades s⁻¹ → orden 1
+      </div>
+    </div>
+
+    <div class="question" id="qm_17">
+      <div class="q-text"><span class="q-pts">6 pts</span>[T7-errores Ke] En el TP de equilibrio, si quedan burbujas de aire en la BURETA al titular, el error en Ke es:</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'qm_17','a')"><span class="opt-letter">a)</span>Por exceso</div>
+        <div class="opt" onclick="selectOpt(this,'qm_17','b')"><span class="opt-letter">b)</span>Por defecto</div>
+        <div class="opt" onclick="selectOpt(this,'qm_17','c')"><span class="opt-letter">c)</span>Ninguno</div>
+      </div>
+      <div class="answer-reveal" id="ans_qm_17">
+        ✓ <b>a) Por exceso</b><br>
+        Burbujas en bureta → se gasta más volumen de Na₂S₂O₃ de lo real → [I₂] calculado mayor → numerador de Kc mayor y denominador menor → Ke por exceso
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-controls">
+    <button class="btn btn-secondary" onclick="resetQuizMaster()">Reiniciar simulacro</button>
+    <button class="btn btn-primary" onclick="checkQuizMaster()">Calcular puntaje final</button>
+  </div>
+  <div class="score-display" id="score_master"></div>
+</div>
+
+</main>
+
+<footer>Química General · Primer Parcial 16/05/2025 · Basado en parciales 2023–2025</footer>
+
+<script>
+// COUNTDOWN
+function updateCountdown() {
+  const exam = new Date('2025-05-16T08:00:00');
+  const now = new Date();
+  const diff = Math.ceil((exam - now) / (1000 * 60 * 60 * 24));
+  document.getElementById('countdown').textContent = diff > 0 ? diff + ' días' : '¡HOY!';
+}
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// NAVIGATION
+function showSection(id) {
+  const allSections = document.querySelectorAll('.crono-section, .all-section, .tema-section, .quiz-master-section');
+  allSections.forEach(s => s.classList.remove('visible'));
+  const target = document.getElementById(id);
+  if (target) target.classList.add('visible');
+
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('btn-' + id);
+  if (btn) btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// QUIZ OPTIONS
+const quizAnswers = {
+  q1_1: 'b', q1_2: 'a', q1_3: 'b', q1_4: 'b', q1_5: 'b', q1_6: 'b',
+  q2_1: 'b', q2_2: 'b', q2_3: 'a', q2_4: 'b', q2_5: 'b',
+  q3_1: 'b', q3_2: 'b', q3_3: 'b', q3_4: 'b', q3_5: 'b',
+  q4_1: 'a', q4_2: 'b', q4_3: 'b', q4_4: 'b', q4_5: 'b', q4_6: 'b',
+  q5_1: 'a', q5_2: 'b', q5_3: 'c', q5_4: 'b',
+  q6_1: 'a', q6_2: 'a', q6_3: 'c', q6_4: 'a', q6_5: 'b', q6_6: 'b',
+  q7_1: 'a', q7_2: 'a', q7_3: 'a', q7_4: 'a', q7_5: 'a',
+  q8_1: 'a', q8_2: 'a', q8_3: 'a', q8_4: 'b', q8_5: 'b',
+  qm_1:'a', qm_2:'a', qm_3:'a', qm_4:'a', qm_5:'b', qm_6:'b',
+  qm_7:'a', qm_8:'a', qm_9:'a', qm_10:'b', qm_11:'a', qm_12:'a',
+  qm_13:'a', qm_14:'a', qm_15:'a', qm_16:'a', qm_17:'a'
+};
+
+const quizPts = {
+  q1_1:4,q1_2:4,q1_3:2,q1_4:2,q1_5:2,q1_6:2,
+  q2_1:4,q2_2:2,q2_3:3,q2_4:3,q2_5:2,
+  q3_1:4,q3_2:2,q3_3:2,q3_4:2,q3_5:4,
+  q4_1:4,q4_2:4,q4_3:2,q4_4:2,q4_5:4,q4_6:2,
+  q5_1:4,q5_2:3,q5_3:2,q5_4:3,
+  q6_1:3,q6_2:3,q6_3:3,q6_4:3,q6_5:3,q6_6:3,
+  q7_1:4,q7_2:3,q7_3:3,q7_4:3,q7_5:3,
+  q8_1:3,q8_2:3,q8_3:2,q8_4:3,q8_5:3,
+  qm_1:6,qm_2:4,qm_3:5,qm_4:6,qm_5:6,qm_6:6,
+  qm_7:6,qm_8:6,qm_9:6,qm_10:4,qm_11:6,qm_12:6,
+  qm_13:9,qm_14:6,qm_15:6,qm_16:6,qm_17:6
+};
+
+const selectedAnswers = {};
+
+function selectOpt(el, qid, val) {
+  const container = document.getElementById(qid);
+  container.querySelectorAll('.opt').forEach(o => o.classList.remove('selected', 'correct', 'wrong'));
+  el.classList.add('selected');
+  selectedAnswers[qid] = val;
+}
+
+function checkQuiz(tema, maxPts) {
+  const temaMap = {
+    t1: ['q1_1','q1_2','q1_3','q1_4','q1_5','q1_6'],
+    t2: ['q2_1','q2_2','q2_3','q2_4','q2_5'],
+    t3: ['q3_1','q3_2','q3_3','q3_4','q3_5'],
+    t4: ['q4_1','q4_2','q4_3','q4_4','q4_5','q4_6'],
+    t5: ['q5_1','q5_2','q5_3','q5_4'],
+    t6: ['q6_1','q6_2','q6_3','q6_4','q6_5','q6_6'],
+    t7: ['q7_1','q7_2','q7_3','q7_4','q7_5'],
+    t8: ['q8_1','q8_2','q8_3','q8_4','q8_5']
+  };
+  const qs = temaMap[tema];
+  let pts = 0;
+  qs.forEach(qid => {
+    const correct = quizAnswers[qid];
+    const selected = selectedAnswers[qid];
+    const container = document.getElementById(qid);
+    const opts = container.querySelectorAll('.opt');
+    const letters = ['a','b','c','d'];
+    opts.forEach((opt, i) => {
+      opt.classList.remove('selected','correct','wrong');
+      if (letters[i] === correct) opt.classList.add('correct');
+      else if (letters[i] === selected && selected !== correct) opt.classList.add('wrong');
+    });
+    document.getElementById('ans_' + qid).classList.add('show');
+    if (selected === correct) pts += quizPts[qid] || 0;
+  });
+  const pct = Math.round(pts/maxPts*100);
+  const div = document.getElementById('score_' + tema);
+  const pass = pts >= maxPts * 0.6;
+  div.className = 'score-display show ' + (pass ? 'score-pass' : 'score-fail');
+  div.textContent = `Puntaje: ${pts}/${maxPts} (${pct}%) · ${pass ? '✓ Aprobado' : '✗ Revisar este tema'}`;
+}
+
+function resetQuiz(tema) {
+  const temaMap = {
+    t1: ['q1_1','q1_2','q1_3','q1_4','q1_5','q1_6'],
+    t2: ['q2_1','q2_2','q2_3','q2_4','q2_5'],
+    t3: ['q3_1','q3_2','q3_3','q3_4','q3_5'],
+    t4: ['q4_1','q4_2','q4_3','q4_4','q4_5','q4_6'],
+    t5: ['q5_1','q5_2','q5_3','q5_4'],
+    t6: ['q6_1','q6_2','q6_3','q6_4','q6_5','q6_6'],
+    t7: ['q7_1','q7_2','q7_3','q7_4','q7_5'],
+    t8: ['q8_1','q8_2','q8_3','q8_4','q8_5']
+  };
+  temaMap[tema].forEach(qid => {
+    delete selectedAnswers[qid];
+    document.getElementById(qid).querySelectorAll('.opt').forEach(o=>o.className='opt');
+    document.getElementById('ans_'+qid).classList.remove('show');
+  });
+  document.getElementById('score_'+tema).className='score-display';
+}
+
+function checkQuizMaster() {
+  const qs = ['qm_1','qm_2','qm_3','qm_4','qm_5','qm_6','qm_7','qm_8','qm_9','qm_10','qm_11','qm_12','qm_13','qm_14','qm_15','qm_16','qm_17'];
+  const maxPts = 100;
+  let pts = 0;
+  qs.forEach(qid => {
+    const correct = quizAnswers[qid];
+    const selected = selectedAnswers[qid];
+    const container = document.getElementById(qid);
+    const opts = container.querySelectorAll('.opt');
+    const letters = ['a','b','c','d'];
+    opts.forEach((opt, i) => {
+      opt.classList.remove('selected','correct','wrong');
+      if (letters[i] === correct) opt.classList.add('correct');
+      else if (letters[i] === selected && selected !== correct) opt.classList.add('wrong');
+    });
+    document.getElementById('ans_'+qid).classList.add('show');
+    if (selected === correct) pts += quizPts[qid] || 0;
+  });
+  const pct = Math.round(pts/maxPts*100);
+  const pass = pts >= 60;
+  const div = document.getElementById('score_master');
+  div.className = 'score-display show ' + (pass ? 'score-pass' : 'score-fail');
+  div.innerHTML = `<b>Puntaje final: ${pts}/100 (${pct}%)</b><br>${pass ? '✓ APROBADO — objetivo cumplido 🎉' : '✗ Necesitás más práctica — revisá los temas con errores'}`;
+}
+
+function resetQuizMaster() {
+  const qs = ['qm_1','qm_2','qm_3','qm_4','qm_5','qm_6','qm_7','qm_8','qm_9','qm_10','qm_11','qm_12','qm_13','qm_14','qm_15','qm_16','qm_17'];
+  qs.forEach(qid => {
+    delete selectedAnswers[qid];
+    document.getElementById(qid).querySelectorAll('.opt').forEach(o=>o.className='opt');
+    document.getElementById('ans_'+qid).classList.remove('show');
+  });
+  document.getElementById('score_master').className='score-display';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
